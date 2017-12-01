@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+    }
+}
+
+group 'com.silverhetch'
+version '0.1.0'
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.21.0'
+}
+
+junitPlatform {
+// platformVersion '1.0.2'
+    filters {
+        engines {
+            // include 'junit-jupiter', 'junit-vintage'
+            // exclude 'custom-engine'
+        }
+        tags {
+            // include 'fast'
+            exclude 'slow'
+        }
+        // includeClassNamePattern '.*Test'
+    }
+    // enableStandardTestTask true
+    // reportsDir file('build/test-results/junit-platform') // this is the default
+    logManager 'org.apache.logging.log4j.jul.LogManager'
+}
