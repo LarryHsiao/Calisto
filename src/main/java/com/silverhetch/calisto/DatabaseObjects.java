@@ -57,22 +57,4 @@ class DatabaseObjects implements Objects {
             return resultSet.getLong(1);
         }
     }
-
-    @Override
-    public void deleteById(long objectId) {
-        try (Connection connection = database.connection();
-             PreparedStatement deleteObject = connection.prepareStatement("DELETE FROM object WHERE id=?");
-             PreparedStatement deleteLinks = connection.prepareStatement("DELETE FROM object_tag WHERE object_id=?")
-        ) {
-            deleteLinks.setLong(1, objectId);
-            deleteLinks.executeUpdate();
-
-            deleteObject.setLong(1, objectId);
-            if (deleteObject.executeUpdate() != 1) {
-                throw new RuntimeException("delete object failed: "+ objectId);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

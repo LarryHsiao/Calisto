@@ -5,4 +5,5 @@ public interface Object {
     String name();
     String objectUri();
     AttachedTags tags();
+    void delete();
 }

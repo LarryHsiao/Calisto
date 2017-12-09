@@ -27,7 +27,7 @@ class DatabaseObjectsTest {
         DatabaseObjects objects = new DatabaseObjects(new DatabaseFactory().database());
         objects.add("name001", "uri");
         Object objectInserted = objects.all()[0];
-        objects.deleteById(objectInserted.id());
+        objectInserted.delete();
         assertEquals(0, objects.all().length);
     }
 }
