@@ -2,18 +2,19 @@ package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.database.Database;
 
-class DatabaseObject implements Object {
+class DatabaseTag implements Tag {
     private final Database database;
     private final long id;
     private final String name;
-    private final String uri;
+    private final String imageUri;
 
-    public DatabaseObject(Database database, long id, String name, String uri) {
+    DatabaseTag(Database database, long id, String name, String imageUri) {
         this.database = database;
         this.id = id;
         this.name = name;
-        this.uri = uri;
+        this.imageUri = imageUri;
     }
+
 
     @Override
     public long id() {
@@ -26,12 +27,7 @@ class DatabaseObject implements Object {
     }
 
     @Override
-    public String objectUri() {
-        return uri;
-    }
-
-    @Override
-    public Tags tags() {
-        return new DatabaseObjectTags(database, id);
+    public String imageUri() {
+        return imageUri;
     }
 }

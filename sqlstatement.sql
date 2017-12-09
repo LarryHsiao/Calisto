@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS object_tag (
   id        INTEGER PRIMARY KEY AUTOINCREMENT,
   object_id INTEGER,
   tag_id    INTEGER
-
 );
 
 INSERT INTO tag (name, uri_image) VALUES ('tag1', 'image');
@@ -62,4 +61,12 @@ INSERT INTO tag (name, uri_image) VALUES ('inserted tag', 'uri of image');
 -- Use case : create relation of existing Object and Tag
 INSERT INTO object_tag (object_id, tag_id) VALUES (1, 1);
 INSERT INTO object_tag (object_id, tag_id) VALUES (1, 2);
+
+-- Use case : delete delete Object
+DELETE FROM object
+WHERE id = 1;
+
+DELETE FROM object_tag
+WHERE object_id = 1;
+
 

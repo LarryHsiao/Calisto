@@ -1,7 +1,7 @@
 package com.silverhetch.calisto;
 
 public interface Object {
-    int id();
+    long id();
     String name();
     String objectUri();
     Tags tags();

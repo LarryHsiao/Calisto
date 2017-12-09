@@ -1,7 +1,7 @@
 package com.silverhetch.calisto;
 
 public interface Tag {
-    int id();
+    long id();
     String name();
     String imageUri();
 }
