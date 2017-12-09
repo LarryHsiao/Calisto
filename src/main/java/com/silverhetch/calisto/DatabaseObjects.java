@@ -34,7 +34,7 @@ class DatabaseObjects implements Objects {
     }
 
     @Override
-    public Object insert(String name, String uri) {
+    public Object add(String name, String uri) {
         try (Connection connection = database.connection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO object (name, uri) VALUES (?, ?);");
         ) {

@@ -31,7 +31,7 @@ class DatabaseObject implements Object {
     }
 
     @Override
-    public Tags tags() {
-        return new DatabaseObjectTags(database, id);
+    public AttachedTags tags() {
+        return new DatabaseAttachedTags(database, id);
     }
 }

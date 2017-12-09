@@ -35,7 +35,7 @@ class DatabaseTags implements Tags {
     }
 
     @Override
-    public Tag insertTag(String name, String uri) {
+    public Tag addTag(String name, String uri) {
         try (Connection connection = database.connection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO tag (name, uri_image) VALUES (?, ?);");
         ) {
@@ -57,28 +57,5 @@ class DatabaseTags implements Tags {
             resultSet.next();
             return resultSet.getLong(1);
         }
-    }
-
-    @Override
-    public void deleteById(long tagId) {
-        try (Connection connection = database.connection();
-             PreparedStatement deleteTag = connection.prepareStatement("DELETE FROM tag WHERE id=?");
-             PreparedStatement deleteLink = connection.prepareStatement("DELETE FROM object_tag WHERE tag_id=?")
-        ) {
-            connection.setAutoCommit(false);
-            deleteLink.setLong(1, tagId);
-            deleteLink.executeUpdate();
-
-            deleteTag.setLong(1, tagId);
-            final boolean tagDeleteSuccess = deleteTag.executeUpdate() == 1;
-            if (!tagDeleteSuccess) {
-                connection.rollback();
-                throw new RuntimeException("delete tag failed id: " + tagId);
-            }
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }

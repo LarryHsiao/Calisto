@@ -6,38 +6,40 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class DatabaseObjectTags implements Tags {
+class DatabaseAttachedTags implements AttachedTags {
     private final Database database;
     private final long objectId;
 
-    DatabaseObjectTags(Database database, long objectId) {
+    DatabaseAttachedTags(Database database, long objectId) {
         this.database = database;
         this.objectId = objectId;
     }
 
     @Override
-    public Tag[] all() {
+    public AttachedTag[] all() {
         try (Connection connection = database.connection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT tag.* FROM object_tag LEFT JOIN tag WHERE object_tag.object_id = 1 AND tag.id = object_tag.tag_id;");
         ) {
-            List<Tag> tagList = new ArrayList<>();
+            List<AttachedTag> tagList = new ArrayList<>();
             while (resultSet.next()) {
-                tagList.add(new DatabaseTag(
+                tagList.add(new DatabaseAttachedTag(
                         database,
-                        resultSet.getInt(resultSet.findColumn("id")),
-                        resultSet.getString(resultSet.findColumn("name")),
-                        resultSet.getString(resultSet.findColumn("uri_image"))
-                ));
+                        new DatabaseTag(
+                                database,
+                                resultSet.getInt(resultSet.findColumn("id")),
+                                resultSet.getString(resultSet.findColumn("name")),
+                                resultSet.getString(resultSet.findColumn("uri_image"))
+                        ), objectId));
             }
-            return tagList.toArray(new Tag[tagList.size()]);
+            return tagList.toArray(new AttachedTag[tagList.size()]);
         } catch (SQLException e) {
-            return new Tag[0];
+            return new AttachedTag[0];
         }
     }
 
     @Override
-    public Tag insertTag(String name, String uri) {
+    public AttachedTag addTag(String name, String uri) {
         try (Connection connection = database.connection();
              PreparedStatement insertTagStatement = connection.prepareStatement("INSERT INTO tag (name, uri_image) VALUES (?, ?);");
              PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT INTO object_tag (object_id, tag_id) VALUES (?, ?);");
@@ -59,7 +61,7 @@ class DatabaseObjectTags implements Tags {
                 throw new RuntimeException("link tag failed : " + name + ", objectId:" + objectId);
             }
             connection.commit();
-            return new DatabaseTag(database, tagId, name, uri);
+            return new DatabaseAttachedTag(database, new DatabaseTag(database, tagId, name, uri), objectId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -72,18 +74,4 @@ class DatabaseObjectTags implements Tags {
         }
     }
 
-    @Override
-    public void deleteById(long tagId) {
-        try (Connection connection = database.connection();
-             PreparedStatement deleteLink = connection.prepareStatement("DELETE FROM object_tag WHERE object_id=? AND tag_id=?")
-        ) {
-            deleteLink.setLong(1, objectId);
-            deleteLink.setLong(2, tagId);
-            if (deleteLink.executeUpdate() != 1) {
-                throw new RuntimeException("delete tag on object failed tagId:" + tagId + " objectId:" + objectId);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

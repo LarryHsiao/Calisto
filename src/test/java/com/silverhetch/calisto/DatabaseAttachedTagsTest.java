@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DatabaseObjectTagsTest {
+class DatabaseAttachedTagsTest {
 
     @BeforeEach
     void setUp() {
@@ -16,9 +16,9 @@ class DatabaseObjectTagsTest {
     @Test
     void insert_checkExist() {
         Objects Objects = new DatabaseObjects(new DatabaseFactory().database());
-        Object object = Objects.insert("object", "uri");
-        object.tags().insertTag("objectTag", "uriTag");
-        Tag insertedTag = object.tags().all()[0];
+        Object object = Objects.add("object", "uri");
+        object.tags().addTag("objectTag", "uriTag");
+        Tag insertedTag = object.tags().all()[0].tag();
         assertEquals(1, insertedTag.id());
         assertEquals("objectTag", insertedTag.name());
         assertEquals("uriTag", insertedTag.imageUri());
@@ -27,10 +27,10 @@ class DatabaseObjectTagsTest {
     @Test
     void delete_checkCount() {
         Objects Objects = new DatabaseObjects(new DatabaseFactory().database());
-        Object object = Objects.insert("object", "uri");
-        object.tags().insertTag("objectTag", "uriTag");
-        Tag insertedTag = object.tags().all()[0];
-        object.tags().deleteById(insertedTag.id());
+        Object object = Objects.add("object", "uri");
+        object.tags().addTag("objectTag", "uriTag");
+        AttachedTag insertedTag = object.tags().all()[0];
+        insertedTag.delete();
         assertEquals(0, object.tags().all().length);
     }
 }

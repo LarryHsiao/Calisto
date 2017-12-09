@@ -15,7 +15,7 @@ class DatabaseObjectsTest {
     @Test
     void insertObject_checkContent() throws Exception {
         DatabaseObjects objects = new DatabaseObjects(new DatabaseFactory().database());
-        objects.insert("name001", "uri");
+        objects.add("name001", "uri");
         Object objectInserted = objects.all()[0];
         assertEquals(1, objectInserted.id());
         assertEquals("name001", objectInserted.name());
@@ -25,7 +25,7 @@ class DatabaseObjectsTest {
     @Test
     void deleteObject_checkCount() {
         DatabaseObjects objects = new DatabaseObjects(new DatabaseFactory().database());
-        objects.insert("name001", "uri");
+        objects.add("name001", "uri");
         Object objectInserted = objects.all()[0];
         objects.deleteById(objectInserted.id());
         assertEquals(0, objects.all().length);

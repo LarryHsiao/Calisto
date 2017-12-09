@@ -4,5 +4,5 @@ public interface Object {
     long id();
     String name();
     String objectUri();
-    Tags tags();
+    AttachedTags tags();
 }
