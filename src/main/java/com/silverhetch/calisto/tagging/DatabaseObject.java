@@ -1,6 +1,6 @@
-package com.silverhetch.calisto;
+package com.silverhetch.calisto.tagging;
 
-import com.silverhetch.calisto.database.Database;
+import com.silverhetch.calisto.tagging.database.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

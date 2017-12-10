@@ -1,4 +1,4 @@
-package com.silverhetch.calisto;
+package com.silverhetch.calisto.tagging;
 
 public interface AttachedTags {
     AttachedTag[] all();

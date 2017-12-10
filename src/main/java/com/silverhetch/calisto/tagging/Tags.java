@@ -1,4 +1,4 @@
-package com.silverhetch.calisto;
+package com.silverhetch.calisto.tagging;
 
 public interface Tags {
     Tag[] all();

@@ -1,9 +1,8 @@
-package com.silverhetch.calisto;
+package com.silverhetch.calisto.tagging;
 
-import com.silverhetch.calisto.database.Database;
-import com.silverhetch.calisto.database.DatabaseFactory;
+import com.silverhetch.calisto.tagging.database.Database;
+import com.silverhetch.calisto.tagging.database.DatabaseFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.sql.Connection;

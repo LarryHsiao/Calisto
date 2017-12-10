@@ -1,6 +1,6 @@
-package com.silverhetch.calisto;
+package com.silverhetch.calisto.tagging;
 
-import com.silverhetch.calisto.database.DatabaseFactory;
+import com.silverhetch.calisto.tagging.database.DatabaseFactory;
 import org.junit.Before;
 import org.junit.Test;
 
