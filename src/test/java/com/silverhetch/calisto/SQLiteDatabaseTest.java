@@ -2,25 +2,26 @@ package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.database.Database;
 import com.silverhetch.calisto.database.DatabaseFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-class SQLiteDatabaseTest {
+public class SQLiteDatabaseTest {
     @Test
-    void initialSQLite() throws SQLException {
+    public void initialSQLite() throws SQLException {
         new DatabaseFactory().database().connection();
         assertTrue(new File("db.db").exists());
     }
 
     @Test
-    void clearDatabase() throws Exception {
+    public void clearDatabase() throws Exception {
         final Database database = new DatabaseFactory().database();
         try (Connection connection = database.connection()) {
             database.clear();

@@ -1,20 +1,21 @@
 package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.database.DatabaseFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class DatabaseAttachedTagsTest {
 
-    @BeforeEach
-    void setUp() {
+public class DatabaseAttachedTagsTest {
+
+    @Before
+    public void setUp() {
         new DatabaseFactory().database().clear();
     }
 
     @Test
-    void insert_checkExist() {
+    public void insert_checkExist() {
         Objects Objects = new DatabaseObjects(new DatabaseFactory().database());
         Object object = Objects.add("object", "uri");
         object.tags().addTag("objectTag", "uriTag");
@@ -25,7 +26,7 @@ class DatabaseAttachedTagsTest {
     }
 
     @Test
-    void delete_checkCount() {
+    public void delete_checkCount() {
         Objects Objects = new DatabaseObjects(new DatabaseFactory().database());
         Object object = Objects.add("object", "uri");
         object.tags().addTag("objectTag", "uriTag");
