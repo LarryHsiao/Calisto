@@ -1,14 +1,22 @@
 package com.silverhetch.calisto.tagging.database;
 
+import com.silverhetch.calisto.config.Configuration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 class SQLiteDatabase implements Database {
+    private final Configuration config;
+
+    SQLiteDatabase(Configuration config) {
+        this.config = config;
+    }
+
     @Override
     public Connection connection() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:db.db");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:" + config.workspaceFile().getAbsolutePath() + "db.db");
         try (Statement statement = connection.createStatement();) {
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS object (" +
