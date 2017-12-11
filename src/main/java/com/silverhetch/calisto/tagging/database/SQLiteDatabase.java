@@ -2,6 +2,7 @@ package com.silverhetch.calisto.tagging.database;
 
 import com.silverhetch.calisto.config.Configuration;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,8 +17,9 @@ class SQLiteDatabase implements Database {
 
     @Override
     public Connection connection() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:" + config.workspaceFile().getAbsolutePath() + "db.db");
-        try (Statement statement = connection.createStatement();) {
+        final File dbFile = new File(config.workspaceFile(), "db.db");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+        try (Statement statement = connection.createStatement()) {
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS object (" +
                             "  id   INTEGER PRIMARY KEY AUTOINCREMENT," +
