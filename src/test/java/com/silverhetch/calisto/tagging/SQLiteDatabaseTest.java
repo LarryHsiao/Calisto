@@ -1,5 +1,6 @@
 package com.silverhetch.calisto.tagging;
 
+import com.silverhetch.calisto.config.ConfigurationFactory;
 import com.silverhetch.calisto.tagging.database.Database;
 import com.silverhetch.calisto.tagging.database.DatabaseFactory;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class SQLiteDatabaseTest {
     @Test
     public void initialSQLite() throws SQLException {
         new DatabaseFactory().database().connection();
-        assertTrue(new File("db.db").exists());
+        assertTrue(new File(new ConfigurationFactory().config().workspaceFile(), "db.db").exists());
     }
 
     @Test
