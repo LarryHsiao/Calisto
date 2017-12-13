@@ -13,12 +13,21 @@ class StorageImpl implements Storage {
     }
 
     @Override
-    public File save(File file) {
+    public CalistoFile save(File file) {
         File parent = availableParent();
         if (!file.renameTo(new File(parent, file.getName()))) {
             throw new RuntimeException("move file failed.");
         }
-        return parent;
+        return new CalistoFileImpl(parent);
+    }
+
+    @Override
+    public CalistoFile get(String id) {
+        final File file = new File(root, id);
+        if (!file.exists()) {
+            throw new RuntimeException("File not found");
+        }
+        return new CalistoFileImpl(file);
     }
 
     @Override
