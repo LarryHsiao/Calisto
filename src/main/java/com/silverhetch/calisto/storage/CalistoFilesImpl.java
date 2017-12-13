@@ -2,7 +2,7 @@ package com.silverhetch.calisto.storage;
 
 import java.io.File;
 
-class CalistoFilesImpl implements CalistoFiles {
+class CalistoFilesImpl {
     private final File file;
 
     CalistoFilesImpl(File file) {

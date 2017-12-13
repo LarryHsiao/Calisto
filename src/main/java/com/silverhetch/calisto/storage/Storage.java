@@ -9,7 +9,7 @@ public interface Storage {
      *
      * @return A {@link CalistoFiles} which is files we stored.
      */
-    CalistoFiles save(File file);
+    File save(File file);
 
     String path();
 }
