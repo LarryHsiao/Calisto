@@ -1,4 +1,4 @@
 package com.silverhetch.calisto.storage;
 
-public interface CalistoFile {
+public interface CalistoFiles {
 }

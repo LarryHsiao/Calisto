@@ -7,7 +7,9 @@ public interface Storage {
      * Store files/directories with File Object in parameter,
      * this method should store all the file to inner file system.
      *
-     * @return A {@link CalistoFile} which is file we stored.
+     * @return A {@link CalistoFiles} which is files we stored.
      */
-    CalistoFile save(File file);
+    CalistoFiles save(File file);
+
+    String path();
 }
