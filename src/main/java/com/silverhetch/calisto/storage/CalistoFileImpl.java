@@ -2,10 +2,10 @@ package com.silverhetch.calisto.storage;
 
 import java.io.File;
 
-public class CalistoFileImpl implements CalistoFile {
+class CalistoFileImpl implements CalistoFile {
     private final File root;
 
-    public CalistoFileImpl(File root) {
+    CalistoFileImpl(File root) {
         this.root = root;
     }
 

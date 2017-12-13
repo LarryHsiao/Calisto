@@ -3,18 +3,12 @@ package com.silverhetch.calisto.storage;
 import com.silverhetch.calisto.config.Configuration;
 import com.silverhetch.mock.MockConfiguration;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 
 public class StorageImplTest {
     private final Configuration configuration = new MockConfiguration();
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     public void saveFile_checkOriginalFileNotExist() throws Exception {
@@ -47,7 +41,6 @@ public class StorageImplTest {
         file.createNewFile();
         CalistoFile fileSaved = storage.save(file);
         Assert.assertTrue(fileSaved.file().exists());
-
     }
 
     @Test
