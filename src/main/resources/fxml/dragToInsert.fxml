@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640"
+            onDragDropped="#onDragDropped"
+            onDragOver="#onDragOver"
+            fx:controller="com.silverhetch.calisto.javafx.DragToInsert"
+            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER"/>
+    </center>
+</BorderPane>
