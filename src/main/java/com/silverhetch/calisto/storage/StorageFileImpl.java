@@ -1,11 +1,12 @@
 package com.silverhetch.calisto.storage;
 
 import java.io.File;
+import java.net.URI;
 
-class CalistoFileImpl implements CalistoFile {
+class StorageFileImpl implements StorageFile {
     private final File root;
 
-    CalistoFileImpl(File root) {
+    StorageFileImpl(File root) {
         this.root = root;
     }
 
@@ -15,8 +16,8 @@ class CalistoFileImpl implements CalistoFile {
     }
 
     @Override
-    public File file() {
-        return root;
+    public URI uri() {
+        return root.toURI();
     }
 
     @Override

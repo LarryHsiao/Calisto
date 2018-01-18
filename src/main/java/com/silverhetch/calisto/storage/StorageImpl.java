@@ -3,6 +3,7 @@ package com.silverhetch.calisto.storage;
 import com.silverhetch.calisto.config.Configuration;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.UUID;
 
 class StorageImpl implements Storage {
@@ -13,21 +14,19 @@ class StorageImpl implements Storage {
     }
 
     @Override
-    public CalistoFile save(File file) {
+    public StorageFile save(File file) throws Exception{
         File parent = availableParent();
-        if (!file.renameTo(new File(parent, file.getName()))) {
-            throw new RuntimeException("move file failed.");
-        }
-        return new CalistoFileImpl(parent);
+        Files.move(file.toPath(), new File(parent, file.getName()).toPath());
+        return new StorageFileImpl(parent);
     }
 
     @Override
-    public CalistoFile get(String id) {
+    public StorageFile get(String id) {
         final File file = new File(root, id);
         if (!file.exists()) {
             throw new RuntimeException("File not found");
         }
-        return new CalistoFileImpl(file);
+        return new StorageFileImpl(file);
     }
 
     @Override

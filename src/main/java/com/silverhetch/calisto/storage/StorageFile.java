@@ -1,9 +1,10 @@
 package com.silverhetch.calisto.storage;
 
 import java.io.File;
+import java.net.URI;
 
-public interface CalistoFile {
+public interface StorageFile {
     String id();
-    File file();
+    URI uri();
     void delete();
 }

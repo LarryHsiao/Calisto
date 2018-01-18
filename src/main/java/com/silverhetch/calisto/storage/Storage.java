@@ -3,9 +3,9 @@ package com.silverhetch.calisto.storage;
 import java.io.File;
 
 public interface Storage {
-    CalistoFile save(File file);
+    StorageFile save(File file) throws Exception;
 
-    CalistoFile get(String id);
+    StorageFile get(String id);
 
     String path();
 }

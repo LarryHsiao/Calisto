@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640"
-            onDragDropped="#onDragDropped"
-            onDragOver="#onDragOver"
-            fx:controller="com.silverhetch.calisto.javafx.DragToInsert"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragDropped="#onDragDropped" onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.silverhetch.calisto.javafx.DragToInsert">
     <center>
-        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER"/>
+        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER" />
     </center>
+   <right>
+      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

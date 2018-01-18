@@ -28,8 +28,8 @@ public class StorageImplTest {
         final File file = new File(configuration.workspaceFile(), "tempTarget");
         file.mkdirs();
         file.createNewFile();
-        CalistoFile fileSaved = storage.save(file);
-        Assert.assertTrue(fileSaved.file().exists());
+        StorageFile fileSaved = storage.save(file);
+        Assert.assertTrue(new File(fileSaved.uri()).exists());
     }
 
     @Test
@@ -39,8 +39,8 @@ public class StorageImplTest {
         final File file = new File(configuration.workspaceFile(), "tempTarget/temp");
         file.mkdirs();
         file.createNewFile();
-        CalistoFile fileSaved = storage.save(file);
-        Assert.assertTrue(fileSaved.file().exists());
+        StorageFile fileSaved = storage.save(file);
+        Assert.assertTrue(new File(fileSaved.uri()).exists());
     }
 
     @Test
@@ -50,9 +50,9 @@ public class StorageImplTest {
         final File file = new File(configuration.workspaceFile(), "tempTarget");
         file.mkdirs();
         file.createNewFile();
-        CalistoFile fileSaved = storage.save(file);
-        CalistoFile fileFromGet = storage.get(fileSaved.id());
-        Assert.assertTrue(fileFromGet.file().exists());
+        StorageFile fileSaved = storage.save(file);
+        StorageFile fileFromGet = storage.get(fileSaved.id());
+        Assert.assertTrue(new File(fileSaved.uri()).exists());
     }
 
     @Test
@@ -62,9 +62,9 @@ public class StorageImplTest {
         final File file = new File(configuration.workspaceFile(), "tempTarget/temp");
         file.mkdirs();
         file.createNewFile();
-        CalistoFile fileSaved = storage.save(file);
+        StorageFile fileSaved = storage.save(file);
         fileSaved.delete();
-        Assert.assertFalse(fileSaved.file().exists());
+        Assert.assertFalse(new File(fileSaved.uri()).exists());
     }
 
     @Test
@@ -74,8 +74,8 @@ public class StorageImplTest {
         final File file = new File(configuration.workspaceFile(), "tempTarget");
         file.mkdirs();
         file.createNewFile();
-        CalistoFile fileSaved = storage.save(file);
+        StorageFile fileSaved = storage.save(file);
         fileSaved.delete();
-        Assert.assertFalse(fileSaved.file().exists());
+        Assert.assertFalse(new File(fileSaved.uri()).exists());
     }
 }
