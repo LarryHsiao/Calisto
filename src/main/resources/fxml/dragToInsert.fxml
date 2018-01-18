@@ -2,13 +2,19 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragDropped="#onDragDropped" onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.silverhetch.calisto.javafx.DragToInsert">
+<?import javafx.scene.layout.VBox?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragDropped="#onDragDropped"
+            onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.silverhetch.calisto.javafx.DragToInsert">
     <center>
-        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER" />
+        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER"/>
     </center>
-   <right>
-      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </right>
+    <right>
+        <VBox>
+            <TextField fx:id="tagFilterField" alignment="TOP_CENTER" onAction="#onFilterChanged" />
+            <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+        </VBox>
+    </right>
 </BorderPane>

@@ -34,6 +34,30 @@ class DatabaseObjects implements Objects {
     }
 
     @Override
+    public Object[] byTagName(String tagName) {
+        try (Connection connection = database.connection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(
+                     "SELECT * " +
+                             "FROM object " +
+                             "JOIN tag, object_tag " +
+                             "WHERE tag.name LIKE '%"+tagName+"%' " +"AND tag.id=object_tag.tag_id AND object.id=object_tag.object_id" )
+        ) {
+            List<Object> resultList = new ArrayList<>();
+            while (resultSet.next()) {
+                resultList.add(new DatabaseObject(
+                        database,
+                        resultSet.getInt(resultSet.findColumn("id")),
+                        resultSet.getString(resultSet.findColumn("name")),
+                        resultSet.getString("uri")));
+            }
+            return resultList.toArray(new Object[resultSet.getFetchSize()]);
+        } catch (SQLException e) {
+            return new Object[0];
+        }
+    }
+
+    @Override
     public Object add(String name, String uri) {
         try (Connection connection = database.connection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO object (name, uri) VALUES (?, ?);");

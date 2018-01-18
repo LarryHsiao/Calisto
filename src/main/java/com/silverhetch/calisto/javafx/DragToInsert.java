@@ -6,10 +6,12 @@ import com.silverhetch.calisto.CalistoFiles;
 import com.silverhetch.calisto.javafx.dialog.AlertDialog;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.util.Callback;
@@ -25,6 +27,8 @@ import static javafx.scene.input.TransferMode.MOVE;
 public class DragToInsert implements Initializable {
     @FXML
     public ListView<CalistoFile> listView;
+    @FXML
+    public TextField tagFilterField;
 
     private final CalistoFiles calistoFiles;
     private final ObservableList<CalistoFile> listData;
@@ -41,13 +45,11 @@ public class DragToInsert implements Initializable {
         listView.setCellFactory(new Callback<ListView<CalistoFile>, ListCell<CalistoFile>>() {
             @Override
             public ListCell<CalistoFile> call(ListView<CalistoFile> param) {
-                return new ListCell<CalistoFile>(){
+                return new ListCell<CalistoFile>() {
                     @Override
                     protected void updateItem(CalistoFile item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (item !=null) {
-                            setText(item.name());
-                        }
+                        setText(empty ? "" : item.name());
                     }
                 };
             }
@@ -61,14 +63,14 @@ public class DragToInsert implements Initializable {
         dragEvent.consume();
     }
 
-    public void onDragDropped(DragEvent dragEvent){
+    public void onDragDropped(DragEvent dragEvent) {
         try {
             Dragboard dragboard = dragEvent.getDragboard();
             boolean success = false;
             if (dragboard.hasFiles()) {
                 List<CalistoFile> newCalistoFile = new ArrayList<>();
                 for (File newFile : dragboard.getFiles()) {
-                    CalistoFile calistoFile = calistoFiles.put(newFile);
+                    CalistoFile calistoFile = calistoFiles.put(newFile, "tag" + Math.random() * 10);
                     newCalistoFile.add(calistoFile);
                 }
                 listData.addAll(newCalistoFile);
@@ -76,8 +78,21 @@ public class DragToInsert implements Initializable {
             }
             dragEvent.setDropCompleted(success);
             dragEvent.consume();
-        }catch (Exception e){
+        } catch (Exception e) {
             new AlertDialog().show(e.getMessage());
+        }
+    }
+
+    public void onFilterChanged(ActionEvent actionEvent) {
+        if (tagFilterField.getText() == null) {
+            return;
+        }
+        if (tagFilterField.getText().isEmpty()) {
+            listData.clear();
+            listData.addAll(calistoFiles.all());
+        } else {
+            listData.clear();
+            listData.addAll(calistoFiles.byTag(tagFilterField.getText()));
         }
     }
 }

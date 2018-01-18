@@ -17,10 +17,23 @@ class CalistoFilesImpl implements CalistoFiles {
     }
 
     @Override
-    public CalistoFile put(File file, String... tags)  throws Exception{
+    public CalistoFile put(File file, String... tags) throws Exception {
         final StorageFile storageFile = storage.save(file);
         Object object = objects.add(file.getName(), storageFile.uri().toString());
+        for (String tag : tags) {
+            object.tags().addTag(tag, "");
+        }
         return new CalistoFileImpl(storage, object);
+    }
+
+    @Override
+    public CalistoFile[] byTag(String tagName) {
+        Object[] result = objects.byTagName(tagName);
+        CalistoFile[] calistoFile = new CalistoFile[result.length];
+        for (int i = 0; i < calistoFile.length; i++) {
+            calistoFile[i] = new CalistoFileImpl(storage, result[i]);
+        }
+        return calistoFile;
     }
 
     @Override
