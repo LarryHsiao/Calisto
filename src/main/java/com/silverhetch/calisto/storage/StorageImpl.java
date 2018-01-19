@@ -3,6 +3,7 @@ package com.silverhetch.calisto.storage;
 import com.silverhetch.calisto.config.Configuration;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.UUID;
 
@@ -14,10 +15,21 @@ class StorageImpl implements Storage {
     }
 
     @Override
-    public StorageFile save(File file) throws Exception{
+    public StorageFile save(File file) throws Exception {
         File parent = availableParent();
-        Files.move(file.toPath(), new File(parent, file.getName()).toPath());
+        move(file, new File(parent, file.getName()));
         return new StorageFileImpl(parent);
+    }
+
+    private void move(File target, File dest) throws IOException {
+        if (target.isDirectory()) {
+            for (File file : target.listFiles()) {
+                move(file, new File(dest, file.getName()));
+            }
+        } else {
+            dest.getParentFile().mkdirs();
+            Files.move(target.toPath(), dest.toPath());
+        }
     }
 
     @Override

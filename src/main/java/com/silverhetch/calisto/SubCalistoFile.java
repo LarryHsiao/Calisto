@@ -1,13 +1,17 @@
 package com.silverhetch.calisto;
 
+import com.silverhetch.calisto.tagging.Object;
+
 import java.io.File;
 import java.net.URI;
 
-public class SubCalistoFile implements CalistoFile {
+class SubCalistoFile implements CalistoFile {
+    private final Object parentObject;
     private final File rootFile;
 
-    public SubCalistoFile(URI uri) {
-        this.rootFile = new File(uri);
+    SubCalistoFile(Object parentObject, URI subFileUri) {
+        this.parentObject = parentObject;
+        this.rootFile = new File(subFileUri);
     }
 
     @Override
@@ -17,14 +21,6 @@ public class SubCalistoFile implements CalistoFile {
 
     @Override
     public CalistoFile[] subFiles() {
-        File[] subFiles = rootFile.listFiles();
-        if (rootFile.isDirectory() && subFiles != null) {
-            CalistoFile[] calistoFiles = new SubCalistoFile[subFiles.length];
-            for (int i = 0; i < subFiles.length; i++) {
-                calistoFiles[i] = new SubCalistoFile(subFiles[i].toURI());
-            }
-            return calistoFiles;
-        }
-        return new CalistoFile[0];
+        return new SubCalistoFileFactory().subFiles(parentObject, rootFile);
     }
 }

@@ -4,15 +4,18 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragDropped="#onDragDropped"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragExited="#onDragExited"
+            onDragDropped="#onDragDropped"
             onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.silverhetch.calisto.javafx.DragToInsert">
     <center>
-        <Label text="%dragToInsert.dragToInsert" BorderPane.alignment="CENTER"/>
+        <StackPane>
+            <ListView fx:id="contentList" prefHeight="200" prefWidth="200" BorderPane.alignment="CENTER"/>
+            <Label fx:id="dragIndicator" visible="false" text="%dragToInsert.dragToInsert"
+                   BorderPane.alignment="CENTER"/>
+        </StackPane>
     </center>
-    <right>
-    </right>
-    <right>
+    <left>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="200.0"/>
@@ -23,7 +26,7 @@
             </rowConstraints>
             <TextField fx:id="tagFilterField" onAction="#onFilterChanged"
                        GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <ListView fx:id="listView" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ListView fx:id="rootList" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         </GridPane>
-    </right>
+    </left>
 </BorderPane>

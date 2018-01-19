@@ -1,14 +1,14 @@
 package com.silverhetch.calisto;
 
-import com.silverhetch.calisto.storage.Storage;
 import com.silverhetch.calisto.tagging.Object;
+
+import java.io.File;
+import java.net.URI;
 
 class CalistoFileImpl implements CalistoFile {
     private final Object object;
-    private final Storage storage;
 
-    CalistoFileImpl(Storage storage, Object object) {
-        this.storage = storage;
+    CalistoFileImpl(Object object) {
         this.object = object;
     }
 
@@ -19,7 +19,8 @@ class CalistoFileImpl implements CalistoFile {
 
     @Override
     public CalistoFile[] subFiles() {
-        return null;
+        final File rootFile = new File(URI.create(object.objectUri()).getPath());
+        return new SubCalistoFileFactory().subFiles(object,rootFile);
     }
 
 }
