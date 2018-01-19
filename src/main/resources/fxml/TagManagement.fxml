@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.silverhetch.calisto.javafx.tag.TagManagement"
+          stylesheets="@../css/General.css"
+          prefHeight="400.0" prefWidth="600.0">
+    <columnConstraints>
+        <ColumnConstraints prefWidth="200"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
+    <ListView fx:id="tagList" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS"/>
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" >
+        <Button text="%app.create" onMouseClicked="#onCreateClick"/>
+    </HBox>
+</GridPane>

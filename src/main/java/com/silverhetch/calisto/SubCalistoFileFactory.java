@@ -4,16 +4,16 @@ import com.silverhetch.calisto.tagging.Object;
 
 import java.io.File;
 
-public class SubCalistoFileFactory {
-    public CalistoFile[] subFiles(Object object, File rootFile) {
+ class SubCalistoFileFactory {
+     CalistoObject[] subFiles(Object object, File rootFile) {
         File[] subFiles = rootFile.listFiles();
         if (rootFile.isDirectory() && subFiles != null) {
-            CalistoFile[] calistoFiles = new SubCalistoFile[subFiles.length];
+            CalistoObject[] calistoObjects = new SubCalistoObject[subFiles.length];
             for (int i = 0; i < subFiles.length; i++) {
-                calistoFiles[i] = new SubCalistoFile(object, subFiles[i].toURI());
+                calistoObjects[i] = new SubCalistoObject(object, subFiles[i].toURI());
             }
-            return calistoFiles;
+            return calistoObjects;
         }
-        return new CalistoFile[0];
+        return new CalistoObject[0];
     }
 }

@@ -5,10 +5,10 @@ import com.silverhetch.calisto.tagging.Object;
 import java.io.File;
 import java.net.URI;
 
-class CalistoFileImpl implements CalistoFile {
+class CalistoObjectImpl implements CalistoObject {
     private final Object object;
 
-    CalistoFileImpl(Object object) {
+    CalistoObjectImpl(Object object) {
         this.object = object;
     }
 
@@ -18,7 +18,7 @@ class CalistoFileImpl implements CalistoFile {
     }
 
     @Override
-    public CalistoFile[] subFiles() {
+    public CalistoObject[] subFiles() {
         final File rootFile = new File(URI.create(object.objectUri()).getPath());
         return new SubCalistoFileFactory().subFiles(object,rootFile);
     }

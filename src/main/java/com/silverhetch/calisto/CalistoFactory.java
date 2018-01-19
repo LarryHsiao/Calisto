@@ -13,8 +13,8 @@ public class CalistoFactory {
         this.configuration = new ConfigurationFactory().config();
     }
 
-    public CalistoFiles calisto() {
-        return new CalistoFilesImpl(
+    public CalistoObjects calisto() {
+        return new CalistoObjectsImpl(
                 new StorageFactory(configuration).storage(),
                 new TaggingFactory(new DatabaseFactory().database()).objects()
         );

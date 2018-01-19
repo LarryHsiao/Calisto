@@ -1,12 +1,10 @@
-package com.silverhetch.calisto.javafx.dialog;
+package com.silverhetch.calisto.javafx.utility;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,7 +19,7 @@ public final class AlertDialog {
         final Stage stage = new Stage();
         stage.initModality(APPLICATION_MODAL);
         stage.setTitle(resource.getString("app.alert"));
-        stage.setWidth(250);
+        stage.setMinWidth(250);
 
         final Label messageLabel = new Label();
         messageLabel.setText(message);

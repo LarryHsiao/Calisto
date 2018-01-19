@@ -7,42 +7,42 @@ import com.silverhetch.calisto.tagging.Objects;
 
 import java.io.File;
 
-class CalistoFilesImpl implements CalistoFiles {
+class CalistoObjectsImpl implements CalistoObjects {
     private final Storage storage;
     private final Objects objects;
 
-    CalistoFilesImpl(Storage storage, Objects objects) {
+    CalistoObjectsImpl(Storage storage, Objects objects) {
         this.storage = storage;
         this.objects = objects;
     }
 
     @Override
-    public CalistoFile put(File file, String... tags) throws Exception {
+    public CalistoObject put(File file, String... tags) throws Exception {
         final StorageFile storageFile = storage.save(file);
         Object object = objects.add(file.getName(), storageFile.uri().toString());
         for (String tag : tags) {
             object.tags().addTag(tag, "");
         }
-        return new CalistoFileImpl(object);
+        return new CalistoObjectImpl(object);
     }
 
     @Override
-    public CalistoFile[] byTag(String tagName) {
+    public CalistoObject[] byTag(String tagName) {
         Object[] result = objects.byTagName(tagName);
-        CalistoFile[] calistoFile = new CalistoFile[result.length];
-        for (int i = 0; i < calistoFile.length; i++) {
-            calistoFile[i] = new CalistoFileImpl(result[i]);
+        CalistoObject[] calistoObject = new CalistoObject[result.length];
+        for (int i = 0; i < calistoObject.length; i++) {
+            calistoObject[i] = new CalistoObjectImpl(result[i]);
         }
-        return calistoFile;
+        return calistoObject;
     }
 
     @Override
-    public CalistoFile[] all() {
+    public CalistoObject[] all() {
         Object[] objectArray = objects.all();
-        CalistoFile[] calistoFiles = new CalistoFile[objectArray.length];
+        CalistoObject[] calistoObjects = new CalistoObject[objectArray.length];
         for (int i = 0; i < objectArray.length; i++) {
-            calistoFiles[i] = new CalistoFileImpl(objectArray[i]);
+            calistoObjects[i] = new CalistoObjectImpl(objectArray[i]);
         }
-        return calistoFiles;
+        return calistoObjects;
     }
 }
