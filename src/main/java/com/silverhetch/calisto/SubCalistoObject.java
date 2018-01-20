@@ -23,4 +23,9 @@ class SubCalistoObject implements CalistoObject {
     public CalistoObject[] subFiles() {
         return new SubCalistoFileFactory().subFiles(parentObject, rootFile);
     }
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }

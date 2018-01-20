@@ -23,4 +23,8 @@ class CalistoObjectImpl implements CalistoObject {
         return new SubCalistoFileFactory().subFiles(object,rootFile);
     }
 
+    @Override
+    public String toString() {
+        return name();
+    }
 }

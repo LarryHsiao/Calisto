@@ -4,14 +4,15 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TreeView?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragExited="#onDragExited"
             onDragDropped="#onDragDropped"
             stylesheets="@../css/General.css"
             onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.silverhetch.calisto.javafx.DragToInsert">
+            fx:controller="com.silverhetch.calisto.javafx.object.DragToInsert">
     <center>
         <StackPane style="-fx-padding: 0 0 0 4">
-            <ListView fx:id="contentList" prefHeight="200" prefWidth="200" BorderPane.alignment="CENTER"/>
+            <TreeView fx:id="objectTree" prefHeight="200" prefWidth="200" BorderPane.alignment="CENTER"/>
             <Label fx:id="dragIndicator" visible="false" text="%dragToInsert.dragToInsert"
                    BorderPane.alignment="CENTER"/>
         </StackPane>

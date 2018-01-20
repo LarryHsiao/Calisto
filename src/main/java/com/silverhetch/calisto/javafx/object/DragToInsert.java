@@ -1,4 +1,4 @@
-package com.silverhetch.calisto.javafx;
+package com.silverhetch.calisto.javafx.object;
 
 import com.silverhetch.calisto.CalistoFactory;
 import com.silverhetch.calisto.CalistoObject;
@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.util.Callback;
@@ -29,16 +26,14 @@ public class DragToInsert implements Initializable {
     @FXML private ListView<CalistoObject> rootList;
     @FXML private TextField tagFilterField;
     @FXML private Label dragIndicator;
-    @FXML private ListView<CalistoObject> contentList;
+    @FXML private TreeView<CalistoObject> objectTree;
 
     private final CalistoObjects calistoObjects;
     private final ObservableList<CalistoObject> rootData;
-    private final ObservableList<CalistoObject> contentData;
 
     public DragToInsert() {
         this.calistoObjects = new CalistoFactory().objects();
         this.rootData = new ObservableListWrapper<>(new ArrayList<>());
-        this.contentData = new ObservableListWrapper<>(new ArrayList<>());
     }
 
     @Override
@@ -59,16 +54,17 @@ public class DragToInsert implements Initializable {
                 };
             }
         });
-
-        contentList.setItems(contentData);
-        contentList.setCellFactory(new Callback<ListView<CalistoObject>, ListCell<CalistoObject>>() {
+        objectTree.setShowRoot(false);
+        objectTree.setRoot(new TreeItem<>());
+        objectTree.setCellFactory(new Callback<TreeView<CalistoObject>, TreeCell<CalistoObject>>() {
             @Override
-            public ListCell<CalistoObject> call(ListView<CalistoObject> param) {
-                return new ListCell<CalistoObject>() {
+            public TreeCell<CalistoObject> call(TreeView<CalistoObject> param) {
+                return new TreeCell<CalistoObject>() {
                     @Override
                     protected void updateItem(CalistoObject item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty ? "" : item.name());
+                        setText(empty || item == null ? "" : item.name());
+//                        setText(empty? "" :item.name());
                     }
                 };
             }
@@ -76,8 +72,20 @@ public class DragToInsert implements Initializable {
     }
 
     private void onItemSelected(CalistoObject newValue) {
-        contentData.clear();
-        contentData.addAll(newValue.subFiles());
+        final TreeItem<CalistoObject> root = objectTree.getRoot();
+        root.getChildren().clear();
+        if (newValue == null) {
+            return;
+        }
+        buildItems(root, newValue);
+    }
+
+    private void buildItems(TreeItem<CalistoObject> parent, CalistoObject object) {
+        for (CalistoObject contentObject : object.subFiles()) {
+            TreeItem<CalistoObject> objectItem = new TreeItem<>(contentObject);
+            parent.getChildren().add(objectItem);
+            buildItems(objectItem, contentObject);
+        }
     }
 
     public void onDragOver(DragEvent dragEvent) {
