@@ -3,10 +3,11 @@ package com.silverhetch.calisto.javafx;
 import com.silverhetch.calisto.CalistoFactory;
 import com.silverhetch.calisto.CalistoObject;
 import com.silverhetch.calisto.CalistoObjects;
-import com.silverhetch.calisto.javafx.utility.AlertDialog;
+import com.silverhetch.calisto.javafx.utility.ExceptionDialog;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,18 +26,17 @@ import java.util.ResourceBundle;
 import static javafx.scene.input.TransferMode.MOVE;
 
 public class DragToInsert implements Initializable {
-    public ListView<CalistoObject> rootList;
-    public TextField tagFilterField;
-    public Label dragIndicator;
-    public ListView<CalistoObject> contentList;
+    @FXML private ListView<CalistoObject> rootList;
+    @FXML private TextField tagFilterField;
+    @FXML private Label dragIndicator;
+    @FXML private ListView<CalistoObject> contentList;
 
     private final CalistoObjects calistoObjects;
     private final ObservableList<CalistoObject> rootData;
     private final ObservableList<CalistoObject> contentData;
 
-
     public DragToInsert() {
-        this.calistoObjects = new CalistoFactory().calisto();
+        this.calistoObjects = new CalistoFactory().objects();
         this.rootData = new ObservableListWrapper<>(new ArrayList<>());
         this.contentData = new ObservableListWrapper<>(new ArrayList<>());
     }
@@ -105,7 +105,7 @@ public class DragToInsert implements Initializable {
             dragEvent.setDropCompleted(success);
             dragEvent.consume();
         } catch (Exception e) {
-            new AlertDialog().show(e.getMessage());
+            new ExceptionDialog().showDialog(e);
         }
     }
 

@@ -13,10 +13,16 @@ public class CalistoFactory {
         this.configuration = new ConfigurationFactory().config();
     }
 
-    public CalistoObjects calisto() {
+    public CalistoObjects objects() {
         return new CalistoObjectsImpl(
                 new StorageFactory(configuration).storage(),
                 new TaggingFactory(new DatabaseFactory().database()).objects()
+        );
+    }
+
+    public CalistoTags tags() {
+        return new CalistoTagsImpl(
+                new TaggingFactory(new DatabaseFactory().database()).tags()
         );
     }
 }

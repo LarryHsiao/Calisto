@@ -19,4 +19,8 @@ class CalistoTagsImpl implements CalistoTags {
         }
         return outputArray;
     }
+
+    @Override public CalistoTag create(String name) {
+        return new CalistoTagImpl(tags.addTag(name, ""));
+    }
 }
