@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.TreeView?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480" minWidth="640" onDragExited="#onDragExited"
             onDragDropped="#onDragDropped"
             stylesheets="@../css/General.css"
             onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.silverhetch.calisto.javafx.object.DragToInsert">
+    <top>
+    </top>
     <center>
-        <StackPane style="-fx-padding: 0 0 0 4">
-            <TreeView fx:id="objectTree" prefHeight="200" prefWidth="200" BorderPane.alignment="CENTER"/>
-            <Label fx:id="dragIndicator" visible="false" text="%dragToInsert.dragToInsert"
-                   BorderPane.alignment="CENTER"/>
-        </StackPane>
+        <HBox>
+            <GridPane BorderPane.alignment="CENTER">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="200.0" prefWidth="200.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="NEVER"/>
+                    <RowConstraints vgrow="ALWAYS"/>
+                </rowConstraints>
+                <TextField fx:id="tagFilterField" onAction="#onFilterChanged"
+                           style="-fx-padding: 0 0 4 0"
+                           GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ListView fx:id="rootList" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            </GridPane>
+            <StackPane style="-fx-padding: 0 0 0 4" HBox.hgrow="ALWAYS">
+                <TreeView fx:id="objectTree" prefHeight="200" prefWidth="200" BorderPane.alignment="CENTER"/>
+                <Label fx:id="dragIndicator" visible="false" text="%dragToInsert.dragToInsert"
+                       BorderPane.alignment="CENTER"/>
+            </StackPane>
+        </HBox>
     </center>
-    <left>
-        <GridPane BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints minWidth="200.0" prefWidth="200.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints vgrow="NEVER"/>
-                <RowConstraints vgrow="ALWAYS"/>
-            </rowConstraints>
-            <TextField fx:id="tagFilterField" onAction="#onFilterChanged"
-                       style="-fx-padding: 0 0 4 0"
-                       GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <ListView fx:id="rootList" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        </GridPane>
-    </left>
 </BorderPane>
