@@ -2,7 +2,9 @@ package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.tagging.Object;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 
 class CalistoObjectImpl implements CalistoObject {
@@ -20,7 +22,12 @@ class CalistoObjectImpl implements CalistoObject {
     @Override
     public CalistoObject[] subFiles() {
         final File rootFile = new File(URI.create(object.objectUri()).getPath());
-        return new SubCalistoFileFactory().subFiles(object,rootFile);
+        return new SubCalistoFileFactory().subFiles(object, rootFile);
+    }
+
+    @Override
+    public void execute() throws IOException {
+        Desktop.getDesktop().open(new File(URI.create(object.objectUri())));
     }
 
     @Override

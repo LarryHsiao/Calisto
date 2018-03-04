@@ -15,6 +15,7 @@ import javafx.scene.input.Dragboard;
 import javafx.util.Callback;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +65,19 @@ public class DragToInsert implements Initializable {
                     protected void updateItem(CalistoObject item, boolean empty) {
                         super.updateItem(item, empty);
                         setText(empty || item == null ? "" : item.name());
-//                        setText(empty? "" :item.name());
                     }
                 };
+            }
+        });
+        objectTree.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                try {
+                    TreeItem<CalistoObject> clickedItem = objectTree.getSelectionModel().getSelectedItem();
+                    clickedItem.getValue().execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    new ExceptionDialog().showDialog(e);
+                }
             }
         });
     }
@@ -77,14 +88,14 @@ public class DragToInsert implements Initializable {
         if (newValue == null) {
             return;
         }
-        buildItems(root, newValue);
+        buildSubItems(root, newValue);
     }
 
-    private void buildItems(TreeItem<CalistoObject> parent, CalistoObject object) {
+    private void buildSubItems(TreeItem<CalistoObject> node, CalistoObject object) {
         for (CalistoObject contentObject : object.subFiles()) {
             TreeItem<CalistoObject> objectItem = new TreeItem<>(contentObject);
-            parent.getChildren().add(objectItem);
-            buildItems(objectItem, contentObject);
+            node.getChildren().add(objectItem);
+            buildSubItems(objectItem, contentObject);
         }
     }
 
