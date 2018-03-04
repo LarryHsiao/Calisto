@@ -7,5 +7,7 @@ public interface CalistoObject {
 
     CalistoObject[] subFiles();
 
+    void attachTag(CalistoTag tag);
+
     void execute() throws IOException;
 }

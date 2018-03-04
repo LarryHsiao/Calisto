@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -31,14 +32,17 @@ public class DragToInsert implements Initializable {
 
     private final CalistoObjects calistoObjects;
     private final ObservableList<CalistoObject> rootData;
+    private ResourceBundle resource;
 
     public DragToInsert() {
         this.calistoObjects = new CalistoFactory().objects();
         this.rootData = new ObservableListWrapper<>(new ArrayList<>());
+        this.resource = null;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resource = resources;
         rootData.addAll(calistoObjects.all());
         rootList.setItems(rootData);
         rootList.getSelectionModel()
@@ -70,16 +74,35 @@ public class DragToInsert implements Initializable {
             }
         });
         objectTree.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            final TreeItem<CalistoObject> clickedItem = objectTree.getSelectionModel().getSelectedItem();
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                 try {
-                    TreeItem<CalistoObject> clickedItem = objectTree.getSelectionModel().getSelectedItem();
                     clickedItem.getValue().execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                     new ExceptionDialog().showDialog(e);
                 }
             }
+
+            if (event.getButton() == MouseButton.SECONDARY) {
+                showContextMenu(clickedItem, event.getScreenX(), event.getScreenY());
+            }
         });
+    }
+
+    private void showContextMenu(TreeItem<CalistoObject> clickedItem, double screenX, double screenY) {
+        final ContextMenu contextMenu = new ContextMenu();
+        final MenuItem item = new MenuItem(resource.getString("dragToInsert.attachTag"));
+        item.setOnAction(event -> {
+            try {
+                new AttachTagDialog(resource).show(clickedItem.getValue());
+            } catch (IOException e) {
+                e.printStackTrace();
+                new ExceptionDialog().showDialog(e);
+            }
+        });
+        contextMenu.getItems().add(item);
+        contextMenu.show(objectTree, screenX, screenY);
     }
 
     private void onItemSelected(CalistoObject newValue) {

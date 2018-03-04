@@ -28,6 +28,11 @@ class CalistoObjectImpl implements CalistoObject {
     }
 
     @Override
+    public void attachTag(CalistoTag tag) {
+        // TODO: 3/6/2018
+    }
+
+    @Override
     public void execute() throws IOException {
         executableFactory.file().execute(URI.create(object.objectUri()));
     }

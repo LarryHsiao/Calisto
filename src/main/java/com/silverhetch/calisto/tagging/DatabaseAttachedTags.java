@@ -39,14 +39,14 @@ class DatabaseAttachedTags implements AttachedTags {
     }
 
     @Override
-    public AttachedTag addTag(String name, String uri) {
+    public AttachedTag addTag(String name, String imageUri) {
         try (Connection connection = database.connection();
              PreparedStatement insertTagStatement = connection.prepareStatement("INSERT INTO tag (name, uri_image) VALUES (?, ?);");
              PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT INTO object_tag (object_id, tag_id) VALUES (?, ?);");
         ) {
             connection.setAutoCommit(false);
             insertTagStatement.setString(1, name);
-            insertTagStatement.setString(2, uri);
+            insertTagStatement.setString(2, imageUri);
             boolean insertTagSuccess = insertTagStatement.executeUpdate() == 1;
             if (!insertTagSuccess) {
                 connection.rollback();
@@ -61,7 +61,7 @@ class DatabaseAttachedTags implements AttachedTags {
                 throw new RuntimeException("link tag failed : " + name + ", objectId:" + objectId);
             }
             connection.commit();
-            return new DatabaseAttachedTag(database, new DatabaseTag(database, tagId, name, uri), objectId);
+            return new DatabaseAttachedTag(database, new DatabaseTag(database, tagId, name, imageUri), objectId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
