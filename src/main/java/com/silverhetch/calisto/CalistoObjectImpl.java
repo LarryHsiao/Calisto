@@ -29,7 +29,7 @@ class CalistoObjectImpl implements CalistoObject {
 
     @Override
     public void attachTag(CalistoTag tag) {
-        // TODO: 3/6/2018
+        object.tags().addTag(new TagWrapper(tag));
     }
 
     @Override

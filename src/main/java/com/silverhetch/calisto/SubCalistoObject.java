@@ -34,6 +34,11 @@ class SubCalistoObject implements CalistoObject {
     }
 
     @Override
+    public void attachTag(CalistoTag tag) {
+        parentObject.tags().addTag(new TagWrapper(tag));
+    }
+
+    @Override
     public String toString() {
         return name();
     }

@@ -12,12 +12,17 @@ import java.net.URI;
         this.tag = tag;
     }
 
-    @Override
+     @Override
+     public long id() {
+         return tag.id();
+     }
+
+     @Override
     public String name() {
         return tag.name();
     }
 
-    @Override
+     @Override
     public URI imageUri() {
         return URI.create(tag.imageUri());
     }

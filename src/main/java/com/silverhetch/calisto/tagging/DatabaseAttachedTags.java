@@ -67,11 +67,30 @@ class DatabaseAttachedTags implements AttachedTags {
         }
     }
 
+    @Override
+    public AttachedTag addTag(Tag tag) {
+        try (Connection connection = database.connection();
+             PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT INTO object_tag (object_id, tag_id) VALUES (?, ?);");
+        ) {
+            connection.setAutoCommit(false);
+            linkToTagStatement.setLong(1, objectId);
+            linkToTagStatement.setLong(2, tag.id());
+            boolean linkSuccess = linkToTagStatement.executeUpdate() == 1;
+            if (!linkSuccess) {
+                connection.rollback();
+                throw new RuntimeException("link exist tag failed, objectId:" + objectId);
+            }
+            connection.commit();
+            return new DatabaseAttachedTag(database, tag, objectId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private long obtainId(PreparedStatement statement) throws SQLException {
         try (ResultSet insetResult = statement.getGeneratedKeys()) {
             insetResult.next();
             return insetResult.getLong(1);
         }
     }
-
 }
