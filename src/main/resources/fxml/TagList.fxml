@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.silverhetch.calisto.javafx.tag.TagManagement"
+            fx:controller="com.silverhetch.calisto.javafx.tag.TagList"
             stylesheets="@../css/General.css"
             prefHeight="400.0" prefWidth="600.0">
     <center>
