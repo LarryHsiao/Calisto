@@ -9,12 +9,12 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu text="File">
-                <MenuItem text="%menuBar.tagManagement" onAction="#tagManagement"/>
+                <MenuItem text="%menuBar.tagList" onAction="#tagList"/>
             </Menu>
         </MenuBar>
     </top>
 
     <center>
-        <fx:include source="DragToInsert.fxml" fx:id="dragToInsert"/>
+        <fx:include source="ObjectList.fxml" fx:id="objectList"/>
     </center>
 </BorderPane>

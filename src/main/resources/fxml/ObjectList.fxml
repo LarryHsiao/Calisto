@@ -6,7 +6,7 @@
             onDragDropped="#onDragDropped"
             stylesheets="@../css/General.css"
             onDragOver="#onDragOver" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.silverhetch.calisto.javafx.object.DragToInsert">
+            fx:controller="com.silverhetch.calisto.javafx.object.ObjectList">
     <top>
     </top>
     <center>

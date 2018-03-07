@@ -15,14 +15,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class TagManagement implements Initializable, CreateTag.TagCreateListener {
+public class TagList implements Initializable, CreateTag.TagCreateListener {
     @FXML private ListView<CalistoTag> tagList;
     @FXML private CreateTag createTagController;
     private ResourceBundle resourceBundle;
     private final ObservableList<CalistoTag> tagData;
     private final CalistoTags tags;
 
-    public TagManagement() {
+    public TagList() {
         this.tagData = new ObservableListWrapper<>(new ArrayList<>());
         this.tags = new CalistoFactory().tags();
     }

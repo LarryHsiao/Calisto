@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.input.TransferMode.MOVE;
 
-public class DragToInsert implements Initializable {
+public class ObjectList implements Initializable {
     @FXML private ListView<CalistoObject> rootList;
     @FXML private TextField tagFilterField;
     @FXML private Label dragIndicator;
@@ -34,7 +34,7 @@ public class DragToInsert implements Initializable {
     private final ObservableList<CalistoObject> rootData;
     private ResourceBundle resource;
 
-    public DragToInsert() {
+    public ObjectList() {
         this.calistoObjects = new CalistoFactory().objects();
         this.rootData = new ObservableListWrapper<>(new ArrayList<>());
         this.resource = null;
