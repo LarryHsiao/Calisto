@@ -15,15 +15,13 @@ import kotlin.collections.ArrayList
 
 class AttachTag(val calistoFile: CalistoFile) : Initializable {
     @FXML
-    private var tagList: ListView<AttachedTag>? = null
-    @FXML
-    private var confrimBUtton: Button? = null
+    private var attachedTagList: ListView<AttachedTag>? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         val list = ArrayList<AttachedTag>()
         list.addAll(calistoFile.attachedTags().all());
-        tagList!!.items = ObservableListWrapper<AttachedTag>(list)
-        tagList!!.setCellFactory {
+        attachedTagList!!.items = ObservableListWrapper<AttachedTag>(list)
+        attachedTagList!!.setCellFactory {
             object : ListCell<AttachedTag>() {
                 override fun updateItem(item: AttachedTag?, empty: Boolean) {
                     super.updateItem(item, empty)
@@ -31,9 +29,5 @@ class AttachTag(val calistoFile: CalistoFile) : Initializable {
                 }
             }
         }
-    }
-
-    fun onConfirm(event: MouseEvent) {
-
     }
 }
