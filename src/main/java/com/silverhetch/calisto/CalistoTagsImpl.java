@@ -3,7 +3,7 @@ package com.silverhetch.calisto;
 import com.silverhetch.calisto.tagging.Tag;
 import com.silverhetch.calisto.tagging.Tags;
 
-class CalistoTagsImpl implements CalistoTags {
+class CalistoTagsImpl implements Tags {
     private final Tags tags;
 
     CalistoTagsImpl(Tags tag) {
@@ -11,16 +11,16 @@ class CalistoTagsImpl implements CalistoTags {
     }
 
     @Override
-    public CalistoTag[] all() {
+    public Tag[] all() {
         Tag[] tagArray = tags.all();
-        CalistoTag[] outputArray = new CalistoTag[tagArray.length];
         for (int i = 0; i < tagArray.length; i++) {
-            outputArray[i] = new CalistoTagImpl(tagArray[i]);
+            tagArray[i] = new CalistoTagImpl(tagArray[i]);
         }
-        return outputArray;
+        return tagArray;
     }
 
-    @Override public CalistoTag create(String name) {
+    @Override
+    public Tag addTag(String name, String imageUri) {
         return new CalistoTagImpl(tags.addTag(name, ""));
     }
 }

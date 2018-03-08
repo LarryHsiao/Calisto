@@ -1,18 +1,19 @@
 package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.javafx.utility.file.ExecutableFactory;
+import com.silverhetch.calisto.tagging.AttachedTags;
 import com.silverhetch.calisto.tagging.Object;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-class SubCalistoObject implements CalistoObject {
+class SubCalistoFile implements CalistoFile {
     private final Object parentObject;
     private final File rootFile;
     private final ExecutableFactory factory;
 
-    SubCalistoObject(Object parentObject, URI subFileUri, ExecutableFactory factory) {
+    SubCalistoFile(Object parentObject, URI subFileUri, ExecutableFactory factory) {
         this.parentObject = parentObject;
         this.rootFile = new File(subFileUri);
         this.factory = factory;
@@ -24,7 +25,7 @@ class SubCalistoObject implements CalistoObject {
     }
 
     @Override
-    public CalistoObject[] subFiles() {
+    public CalistoFile[] subFiles() {
         return new SubCalistoFileFactory().subFiles(parentObject, rootFile, factory);
     }
 
@@ -34,8 +35,8 @@ class SubCalistoObject implements CalistoObject {
     }
 
     @Override
-    public void attachTag(CalistoTag tag) {
-        parentObject.tags().addTag(new TagWrapper(tag));
+    public AttachedTags attachedTags() {
+        return parentObject.tags();
     }
 
     @Override

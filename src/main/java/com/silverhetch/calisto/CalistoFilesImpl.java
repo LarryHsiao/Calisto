@@ -8,44 +8,44 @@ import com.silverhetch.calisto.tagging.Objects;
 
 import java.io.File;
 
-class CalistoObjectsImpl implements CalistoObjects {
+class CalistoFilesImpl implements CalistoFiles {
     private final Storage storage;
     private final Objects objects;
     private final ExecutableFactory factory;
 
-    CalistoObjectsImpl(Storage storage, Objects objects, ExecutableFactory factory) {
+    CalistoFilesImpl(Storage storage, Objects objects, ExecutableFactory factory) {
         this.storage = storage;
         this.objects = objects;
         this.factory = factory;
     }
 
     @Override
-    public CalistoObject put(File file, String... tags) throws Exception {
+    public CalistoFile put(File file, String... tags) throws Exception {
         final StorageFile storageFile = storage.save(file);
         Object object = objects.add(file.getName(), storageFile.uri().toString());
         for (String tag : tags) {
             object.tags().addTag(tag, "");
         }
-        return new CalistoObjectImpl(object, factory);
+        return new CalistoFileImpl(object, factory);
     }
 
     @Override
-    public CalistoObject[] byTag(String tagName) {
+    public CalistoFile[] byTag(String tagName) {
         Object[] result = objects.byTagName(tagName);
-        CalistoObject[] calistoObject = new CalistoObject[result.length];
-        for (int i = 0; i < calistoObject.length; i++) {
-            calistoObject[i] = new CalistoObjectImpl(result[i], factory);
+        CalistoFile[] calistoFile = new CalistoFile[result.length];
+        for (int i = 0; i < calistoFile.length; i++) {
+            calistoFile[i] = new CalistoFileImpl(result[i], factory);
         }
-        return calistoObject;
+        return calistoFile;
     }
 
     @Override
-    public CalistoObject[] all() {
+    public CalistoFile[] all() {
         Object[] objectArray = objects.all();
-        CalistoObject[] calistoObjects = new CalistoObject[objectArray.length];
+        CalistoFile[] calistoFiles = new CalistoFile[objectArray.length];
         for (int i = 0; i < objectArray.length; i++) {
-            calistoObjects[i] = new CalistoObjectImpl(objectArray[i], factory);
+            calistoFiles[i] = new CalistoFileImpl(objectArray[i], factory);
         }
-        return calistoObjects;
+        return calistoFiles;
     }
 }

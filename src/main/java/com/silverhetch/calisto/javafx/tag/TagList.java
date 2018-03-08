@@ -1,8 +1,8 @@
 package com.silverhetch.calisto.javafx.tag;
 
 import com.silverhetch.calisto.CalistoFactory;
-import com.silverhetch.calisto.CalistoTag;
-import com.silverhetch.calisto.CalistoTags;
+import com.silverhetch.calisto.tagging.Tag;
+import com.silverhetch.calisto.tagging.Tags;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class TagList implements Initializable, CreateTag.TagCreateListener {
-    @FXML private ListView<CalistoTag> tagList;
+    @FXML private ListView<Tag> tagList;
     @FXML private CreateTag createTagController;
     private ResourceBundle resourceBundle;
-    private final ObservableList<CalistoTag> tagData;
-    private final CalistoTags tags;
+    private final ObservableList<Tag> tagData;
+    private final Tags tags;
 
     public TagList() {
         this.tagData = new ObservableListWrapper<>(new ArrayList<>());
@@ -32,12 +32,12 @@ public class TagList implements Initializable, CreateTag.TagCreateListener {
         resourceBundle = resources;
         tagData.addAll(tags.all());
         tagList.setItems(tagData);
-        tagList.setCellFactory(new Callback<ListView<CalistoTag>, ListCell<CalistoTag>>() {
+        tagList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {
             @Override
-            public ListCell<CalistoTag> call(ListView<CalistoTag> param) {
-                return new ListCell<CalistoTag>() {
+            public ListCell<Tag> call(ListView<Tag> param) {
+                return new ListCell<Tag>() {
                     @Override
-                    protected void updateItem(CalistoTag item, boolean empty) {
+                    protected void updateItem(Tag item, boolean empty) {
                         super.updateItem(item, empty);
                         setText(empty ? "" : item.name());
                     }
@@ -47,7 +47,8 @@ public class TagList implements Initializable, CreateTag.TagCreateListener {
         createTagController.setListener(this);
     }
 
-    @Override public void onTagCreated(CalistoTag tag) {
+    @Override
+    public void onTagCreated(Tag tag) {
         tagData.add(tag);
     }
 }

@@ -1,8 +1,8 @@
 package com.silverhetch.calisto.javafx.object;
 
 import com.silverhetch.calisto.CalistoFactory;
-import com.silverhetch.calisto.CalistoObject;
-import com.silverhetch.calisto.CalistoObjects;
+import com.silverhetch.calisto.CalistoFile;
+import com.silverhetch.calisto.CalistoFiles;
 import com.silverhetch.calisto.javafx.utility.ExceptionDialog;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
@@ -25,17 +25,17 @@ import java.util.ResourceBundle;
 import static javafx.scene.input.TransferMode.MOVE;
 
 public class ObjectList implements Initializable {
-    @FXML private ListView<CalistoObject> rootList;
+    @FXML private ListView<CalistoFile> rootList;
     @FXML private TextField tagFilterField;
     @FXML private Label dragIndicator;
-    @FXML private TreeView<CalistoObject> objectTree;
+    @FXML private TreeView<CalistoFile> objectTree;
 
-    private final CalistoObjects calistoObjects;
-    private final ObservableList<CalistoObject> rootData;
+    private final CalistoFiles calistoFiles;
+    private final ObservableList<CalistoFile> rootData;
     private ResourceBundle resource;
 
     public ObjectList() {
-        this.calistoObjects = new CalistoFactory().objects();
+        this.calistoFiles = new CalistoFactory().objects();
         this.rootData = new ObservableListWrapper<>(new ArrayList<>());
         this.resource = null;
     }
@@ -43,16 +43,16 @@ public class ObjectList implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resource = resources;
-        rootData.addAll(calistoObjects.all());
+        rootData.addAll(calistoFiles.all());
         rootList.setItems(rootData);
         rootList.getSelectionModel()
                 .selectedItemProperty().addListener((observable, oldValue, newValue) -> onItemSelected(newValue));
-        rootList.setCellFactory(new Callback<ListView<CalistoObject>, ListCell<CalistoObject>>() {
+        rootList.setCellFactory(new Callback<ListView<CalistoFile>, ListCell<CalistoFile>>() {
             @Override
-            public ListCell<CalistoObject> call(ListView<CalistoObject> param) {
-                return new ListCell<CalistoObject>() {
+            public ListCell<CalistoFile> call(ListView<CalistoFile> param) {
+                return new ListCell<CalistoFile>() {
                     @Override
-                    protected void updateItem(CalistoObject item, boolean empty) {
+                    protected void updateItem(CalistoFile item, boolean empty) {
                         super.updateItem(item, empty);
                         setText(empty ? "" : item.name());
                     }
@@ -61,12 +61,12 @@ public class ObjectList implements Initializable {
         });
         objectTree.setShowRoot(false);
         objectTree.setRoot(new TreeItem<>());
-        objectTree.setCellFactory(new Callback<TreeView<CalistoObject>, TreeCell<CalistoObject>>() {
+        objectTree.setCellFactory(new Callback<TreeView<CalistoFile>, TreeCell<CalistoFile>>() {
             @Override
-            public TreeCell<CalistoObject> call(TreeView<CalistoObject> param) {
-                return new TreeCell<CalistoObject>() {
+            public TreeCell<CalistoFile> call(TreeView<CalistoFile> param) {
+                return new TreeCell<CalistoFile>() {
                     @Override
-                    protected void updateItem(CalistoObject item, boolean empty) {
+                    protected void updateItem(CalistoFile item, boolean empty) {
                         super.updateItem(item, empty);
                         setText(empty || item == null ? "" : item.name());
                     }
@@ -74,7 +74,7 @@ public class ObjectList implements Initializable {
             }
         });
         objectTree.setOnMouseClicked(event -> {
-            final TreeItem<CalistoObject> clickedItem = objectTree.getSelectionModel().getSelectedItem();
+            final TreeItem<CalistoFile> clickedItem = objectTree.getSelectionModel().getSelectedItem();
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                 try {
                     clickedItem.getValue().execute();
@@ -90,7 +90,7 @@ public class ObjectList implements Initializable {
         });
     }
 
-    private void showContextMenu(TreeItem<CalistoObject> clickedItem, double screenX, double screenY) {
+    private void showContextMenu(TreeItem<CalistoFile> clickedItem, double screenX, double screenY) {
         final ContextMenu contextMenu = new ContextMenu();
         final MenuItem item = new MenuItem(resource.getString("dragToInsert.attachTag"));
         item.setOnAction(event -> {
@@ -105,8 +105,8 @@ public class ObjectList implements Initializable {
         contextMenu.show(objectTree, screenX, screenY);
     }
 
-    private void onItemSelected(CalistoObject newValue) {
-        final TreeItem<CalistoObject> root = objectTree.getRoot();
+    private void onItemSelected(CalistoFile newValue) {
+        final TreeItem<CalistoFile> root = objectTree.getRoot();
         root.getChildren().clear();
         if (newValue == null) {
             return;
@@ -114,9 +114,9 @@ public class ObjectList implements Initializable {
         buildSubItems(root, newValue);
     }
 
-    private void buildSubItems(TreeItem<CalistoObject> node, CalistoObject object) {
-        for (CalistoObject contentObject : object.subFiles()) {
-            TreeItem<CalistoObject> objectItem = new TreeItem<>(contentObject);
+    private void buildSubItems(TreeItem<CalistoFile> node, CalistoFile object) {
+        for (CalistoFile contentObject : object.subFiles()) {
+            TreeItem<CalistoFile> objectItem = new TreeItem<>(contentObject);
             node.getChildren().add(objectItem);
             buildSubItems(objectItem, contentObject);
         }
@@ -136,12 +136,12 @@ public class ObjectList implements Initializable {
             Dragboard dragboard = dragEvent.getDragboard();
             boolean success = false;
             if (dragboard.hasFiles()) {
-                List<CalistoObject> newCalistoObject = new ArrayList<>();
+                List<CalistoFile> newCalistoFile = new ArrayList<>();
                 for (File newFile : dragboard.getFiles()) {
-                    CalistoObject calistoObject = calistoObjects.put(newFile);
-                    newCalistoObject.add(calistoObject);
+                    CalistoFile calistoFile = calistoFiles.put(newFile);
+                    newCalistoFile.add(calistoFile);
                 }
-                rootData.addAll(newCalistoObject);
+                rootData.addAll(newCalistoFile);
                 success = true;
             }
             dragEvent.setDropCompleted(success);
@@ -157,9 +157,9 @@ public class ObjectList implements Initializable {
         }
         rootData.clear();
         if (tagFilterField.getText().isEmpty()) {
-            rootData.addAll(calistoObjects.all());
+            rootData.addAll(calistoFiles.all());
         } else {
-            rootData.addAll(calistoObjects.byTag(tagFilterField.getText()));
+            rootData.addAll(calistoFiles.byTag(tagFilterField.getText()));
         }
     }
 

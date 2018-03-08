@@ -1,21 +1,20 @@
 package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.javafx.utility.file.ExecutableFactory;
-import com.silverhetch.calisto.javafx.utility.file.FileExecutable;
 import com.silverhetch.calisto.tagging.Object;
 
 import java.io.File;
 
 class SubCalistoFileFactory {
-    CalistoObject[] subFiles(Object object, File rootFile, ExecutableFactory factory) {
+    CalistoFile[] subFiles(Object object, File rootFile, ExecutableFactory factory) {
         File[] subFiles = rootFile.listFiles();
         if (rootFile.isDirectory() && subFiles != null) {
-            CalistoObject[] calistoObjects = new SubCalistoObject[subFiles.length];
+            CalistoFile[] calistoFiles = new SubCalistoFile[subFiles.length];
             for (int i = 0; i < subFiles.length; i++) {
-                calistoObjects[i] = new SubCalistoObject(object, subFiles[i].toURI(), factory);
+                calistoFiles[i] = new SubCalistoFile(object, subFiles[i].toURI(), factory);
             }
-            return calistoObjects;
+            return calistoFiles;
         }
-        return new CalistoObject[0];
+        return new CalistoFile[0];
     }
 }

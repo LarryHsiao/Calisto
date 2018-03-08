@@ -1,8 +1,8 @@
 package com.silverhetch.calisto.javafx.tag;
 
 import com.silverhetch.calisto.CalistoFactory;
-import com.silverhetch.calisto.CalistoTag;
-import com.silverhetch.calisto.CalistoTags;
+import com.silverhetch.calisto.tagging.Tag;
+import com.silverhetch.calisto.tagging.Tags;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,13 +14,13 @@ import java.util.ResourceBundle;
 
 public class CreateTag implements Initializable {
     public interface TagCreateListener {
-        void onTagCreated(CalistoTag tag);
+        void onTagCreated(Tag tag);
     }
 
     @FXML private TextField tagName;
     @FXML private Button confirm;
 
-    private final CalistoTags calistoTags;
+    private final Tags calistoTags;
     private TagCreateListener listener;
 
     public CreateTag() {
@@ -41,7 +41,7 @@ public class CreateTag implements Initializable {
         if (inputName == null || inputName.isEmpty()) {
             return;
         }
-        CalistoTag createdTag = calistoTags.create(inputName);
+        Tag createdTag = calistoTags.addTag(inputName, "");
         tagName.setText("");
 
         if (listener != null) {

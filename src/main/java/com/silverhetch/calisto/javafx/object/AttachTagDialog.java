@@ -1,6 +1,6 @@
 package com.silverhetch.calisto.javafx.object;
 
-import com.silverhetch.calisto.CalistoObject;
+import com.silverhetch.calisto.CalistoFile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Dialog;
@@ -15,7 +15,7 @@ public class AttachTagDialog {
         this.resourceBundle = resourceBundle;
     }
 
-    public void show(CalistoObject object) throws IOException {
+    public void show(CalistoFile object) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/AttachTag.fxml"));
         loader.setResources(resourceBundle);
