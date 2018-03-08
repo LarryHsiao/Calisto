@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@../css/General.css">
-    <!--
-    construct control dynamically:
-    fx:controller="com.silverhetch.calisto.javafx.object.AttachTag"
-    -->
-    <ListView fx:id="attachedTagList"/>
+      fx:controller="com.silverhetch.calisto.javafx.object.AttachTag"
+      prefHeight="400.0" prefWidth="600.0">
+    <fx:include source="TagList.fxml" fx:id="tagList"/>
+    <fx:include source="AttachedTagList.fxml" fx:id="attachedTagList"/>
 </HBox>

@@ -19,8 +19,8 @@ public class AttachTagDialog {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/AttachTag.fxml"));
         loader.setResources(resourceBundle);
-        loader.setController(new AttachTag(object));
         Parent parent = loader.load();
+        ((AttachTag) loader.getController()).setup(object);
 
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle(resourceBundle.getString("dragToInsert.attachTag"));
