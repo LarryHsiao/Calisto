@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.silverhetch.calisto.javafx.object.AttachTag"
-      prefHeight="400.0" prefWidth="600.0">
-    <fx:include source="TagList.fxml" fx:id="tagList"/>
-    <fx:include source="AttachedTagList.fxml" fx:id="attachedTagList"/>
-</HBox>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+<GridPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.silverhetch.calisto.javafx.object.AttachTag">
+    <fx:include fx:id="tagList" source="TagList.fxml" GridPane.columnIndex="0"/>
+    <Button fx:id="attachSelectedButton" alignment="CENTER" GridPane.columnIndex="1"
+            text="%attachedTag.attachSelected" onMouseClicked="#onClicked"/>
+    <fx:include fx:id="attachedTagList" source="AttachedTagList.fxml" GridPane.columnIndex="2"/>
+</GridPane>

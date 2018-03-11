@@ -7,5 +7,4 @@
       fx:controller="com.silverhetch.calisto.javafx.object.AttachedTagList"
       stylesheets="@../css/General.css">
     <ListView fx:id="attachedTagList"/>
-
 </HBox>

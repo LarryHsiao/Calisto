@@ -4,6 +4,7 @@ import com.silverhetch.calisto.CalistoFile
 import com.silverhetch.calisto.javafx.tag.TagList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.input.MouseEvent
 import java.net.URL
 import java.util.*
 
@@ -22,5 +23,10 @@ class AttachTag : Initializable {
     fun setup(calistoFile: CalistoFile) {
         this.calistoFile = calistoFile
         attachedTagListController!!.setup(calistoFile)
+    }
+
+    fun onClicked(event: MouseEvent) {
+        calistoFile!!.attachedTags().addTag(tagListController!!.selectedTag())
+        attachedTagListController!!.loadList()
     }
 }

@@ -5,12 +5,8 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.silverhetch.calisto.javafx.tag.TagList"
-            stylesheets="@../css/General.css"
-            prefHeight="400.0" prefWidth="600.0">
+            stylesheets="@../css/General.css">
     <center>
         <ListView fx:id="tagList"/>
     </center>
-    <left>
-        <fx:include source="CreateTag.fxml" fx:id="createTag"/>
-    </left>
 </BorderPane>

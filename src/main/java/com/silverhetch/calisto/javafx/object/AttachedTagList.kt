@@ -31,6 +31,11 @@ class AttachedTagList : Initializable {
 
     fun setup(calistoFile: CalistoFile) {
         this.calistoFile = calistoFile
-        attachedTagList!!.items.addAll(calistoFile.attachedTags().all())
+        loadList()
+    }
+
+    fun loadList() {
+        attachedTagList!!.items.clear()
+        attachedTagList!!.items.addAll(calistoFile!!.attachedTags().all())
     }
 }
