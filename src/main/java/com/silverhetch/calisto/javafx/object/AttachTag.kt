@@ -25,7 +25,7 @@ class AttachTag : Initializable {
         attachedTagListController!!.setup(calistoFile)
     }
 
-    fun onClicked(event: MouseEvent) {
+    fun attach(event: MouseEvent) {
         calistoFile!!.attachedTags().addTag(tagListController!!.selectedTag())
         attachedTagListController!!.loadList()
     }

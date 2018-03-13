@@ -13,7 +13,6 @@ import java.util.*
 class Main : Initializable {
     @FXML
     private var rootPane: BorderPane? = null
-
     @FXML
     private var objectListController: ObjectList? = null
     private var resources: ResourceBundle? = null
@@ -28,8 +27,8 @@ class Main : Initializable {
         rootPane!!.center = tagListRoot
     }
 
-    fun tagList() {
-        val tagListRoot = FXMLLoader.load<Parent>(javaClass.getResource("/fxml/TagList.fxml"), resources)
+    fun tagManagement() {
+        val tagListRoot = FXMLLoader.load<Parent>(javaClass.getResource("/fxml/TagManagement.fxml"), resources)
         rootPane!!.center = tagListRoot
     }
 

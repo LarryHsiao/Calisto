@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.silverhetch.calisto.javafx.tag.TagManagement"
+            prefHeight="400.0" prefWidth="600.0">
+    <top>
+        <fx:include source="CreateTag.fxml" fx:id="createTag"/>
+    </top>
+    <center>
+        <fx:include source="TagList.fxml" fx:id="tagList"/>
+    </center>
+
+</BorderPane>

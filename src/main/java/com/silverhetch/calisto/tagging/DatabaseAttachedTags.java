@@ -19,7 +19,7 @@ class DatabaseAttachedTags implements AttachedTags {
     public AttachedTag[] all() {
         try (Connection connection = database.connection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT tag.* FROM object_tag LEFT JOIN tag WHERE object_tag.object_id = 1 AND tag.id = object_tag.tag_id;");
+             ResultSet resultSet = statement.executeQuery("SELECT tag.* FROM object_tag LEFT JOIN tag WHERE object_tag.object_id = "+objectId+" AND tag.id = object_tag.tag_id;");
         ) {
             List<AttachedTag> tagList = new ArrayList<>();
             while (resultSet.next()) {

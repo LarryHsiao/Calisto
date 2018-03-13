@@ -9,7 +9,7 @@
         <MenuBar BorderPane.alignment="CENTER">
             <Menu text="File">
                 <MenuItem text="%menuBar.objectList" onAction="#objectList"/>
-                <MenuItem text="%menuBar.tagManagement" onAction="#tagList"/>
+                <MenuItem text="%menuBar.tagManagement" onAction="#tagManagement"/>
                 <MenuItem text="%menuBar.options" onAction="#options"/>
             </Menu>
         </MenuBar>

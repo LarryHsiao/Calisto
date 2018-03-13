@@ -9,7 +9,7 @@
       fx:controller="com.silverhetch.calisto.javafx.config.Setting">
 
     <HBox>
-        <TextField fx:id="homePathField"/>
+        <TextField fx:id="homePathField" editable="false"/>
         <Button text="..." onAction="#showHomeChooser"/>
     </HBox>
 </VBox>
