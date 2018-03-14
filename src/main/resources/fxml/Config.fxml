@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.silverhetch.calisto.javafx.config.Setting">
+      stylesheets="@../css/General.css"
+      fx:controller="com.silverhetch.calisto.javafx.config.Config">
 
     <HBox>
         <TextField fx:id="homePathField" editable="false"/>

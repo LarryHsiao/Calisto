@@ -11,7 +11,7 @@ import javafx.stage.DirectoryChooser
 import java.net.URL
 import java.util.*
 
-class Setting : Initializable {
+class Config : Initializable {
     private var resources: ResourceBundle? = null;
     private val config: Configuration
     @FXML

@@ -33,7 +33,7 @@ class Main : Initializable {
     }
 
     fun options() {
-        val optionRoot = FXMLLoader.load<Parent>(javaClass.getResource("/fxml/Options.fxml"), resources)
+        val optionRoot = FXMLLoader.load<Parent>(javaClass.getResource("/fxml/Config.fxml"), resources)
         rootPane!!.center = optionRoot
     }
 }
