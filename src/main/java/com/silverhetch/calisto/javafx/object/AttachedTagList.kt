@@ -1,6 +1,7 @@
 package com.silverhetch.calisto.javafx.`object`
 
 import com.silverhetch.calisto.CalistoFile
+import com.silverhetch.calisto.javafx.component.ListImageViewFactory
 import com.silverhetch.calisto.tagging.AttachedTag
 import com.sun.javafx.collections.ObservableListWrapper
 import javafx.collections.ObservableList
@@ -17,7 +18,7 @@ class AttachedTagList : Initializable {
     private var attachedTagList: ListView<AttachedTag>? = null
     @FXML
     private var calistoFile: CalistoFile? = null
-    private val data:ObservableList<AttachedTag>;
+    private val data: ObservableList<AttachedTag>;
 
     init {
         data = ObservableListWrapper<AttachedTag>(ArrayList<AttachedTag>())
@@ -29,7 +30,14 @@ class AttachedTagList : Initializable {
             object : ListCell<AttachedTag>() {
                 override fun updateItem(item: AttachedTag?, empty: Boolean) {
                     super.updateItem(item, empty)
-                    text = if (empty) "" else item?.tag()!!.name()
+                    if (empty) {
+                        text = ""
+                        graphic = null
+                    } else {
+                        text = item?.tag()!!.name()
+                        graphic = ListImageViewFactory(item.tag().imageUri()).imageView()
+                    }
+
                 }
             }
         }

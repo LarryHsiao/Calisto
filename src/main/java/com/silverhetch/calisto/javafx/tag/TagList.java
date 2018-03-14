@@ -1,6 +1,7 @@
 package com.silverhetch.calisto.javafx.tag;
 
 import com.silverhetch.calisto.CalistoFactory;
+import com.silverhetch.calisto.javafx.component.ListImageViewFactory;
 import com.silverhetch.calisto.tagging.Tag;
 import com.silverhetch.calisto.tagging.Tags;
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -9,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -46,18 +45,7 @@ public class TagList implements Initializable {
                             setGraphic(null);
                         } else {
                             setText(item.name());
-                            loadImage(item);
-                        }
-                    }
-
-                    private void loadImage(Tag item) {
-                        try {
-                            Image image = new Image(item.imageUri(), IMAGE_SIZE, IMAGE_SIZE, true, true, true);
-                            ImageView imageView = new ImageView(image);
-                            imageView.setFitHeight(IMAGE_SIZE);
-                            imageView.setFitWidth(IMAGE_SIZE);
-                            setGraphic(imageView);
-                        } catch (Exception ignore) {
+                            setGraphic(new ListImageViewFactory(item.imageUri()).imageView());
                         }
                     }
                 };
