@@ -6,7 +6,7 @@
             fx:controller="com.silverhetch.calisto.javafx.tag.TagManagement"
             prefHeight="400.0" prefWidth="600.0">
     <top>
-        <fx:include source="CreateTag.fxml" fx:id="createTag"/>
+        <fx:include source="TagCreation.fxml" fx:id="createTag"/>
     </top>
     <center>
         <fx:include source="TagList.fxml" fx:id="tagList"/>

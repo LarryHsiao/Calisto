@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreateTag implements Initializable {
+public class TagCreation implements Initializable {
     public interface TagCreateListener {
         void onTagCreated(Tag tag);
     }
@@ -23,7 +23,7 @@ public class CreateTag implements Initializable {
     private final Tags calistoTags;
     private TagCreateListener listener;
 
-    public CreateTag() {
+    public TagCreation() {
         this.listener = null;
         this.calistoTags = new CalistoFactory().tags();
     }

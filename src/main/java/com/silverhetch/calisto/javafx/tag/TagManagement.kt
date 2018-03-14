@@ -7,11 +7,11 @@ import java.util.*
 
 class TagManagement : Initializable {
     @FXML
-    private var createTagController: CreateTag? = null
+    private var tagCreationController: TagCreation? = null
     @FXML
     private var tagListController: TagList? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        createTagController!!.setListener { tagListController!!.loadList() }
+        tagCreationController!!.setListener { tagListController!!.loadList() }
     }
 }
