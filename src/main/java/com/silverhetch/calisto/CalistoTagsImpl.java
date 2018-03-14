@@ -21,6 +21,6 @@ class CalistoTagsImpl implements Tags {
 
     @Override
     public Tag addTag(String name, String imageUri) {
-        return new CalistoTagImpl(tags.addTag(name, ""));
+        return new CalistoTagImpl(tags.addTag(name, imageUri));
     }
 }

@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class TagList implements Initializable {
+    private final static int IMAGE_SIZE = 25;
     @FXML private ListView<Tag> tagList;
     private ResourceBundle resourceBundle;
     private final Tags tags;
@@ -38,7 +41,24 @@ public class TagList implements Initializable {
                     @Override
                     protected void updateItem(Tag item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty ? "" : item.name());
+                        if (empty) {
+                            setText("");
+                            setGraphic(null);
+                        } else {
+                            setText(item.name());
+                            loadImage(item);
+                        }
+                    }
+
+                    private void loadImage(Tag item) {
+                        try {
+                            Image image = new Image(item.imageUri(), IMAGE_SIZE, IMAGE_SIZE, true, true, true);
+                            ImageView imageView = new ImageView(image);
+                            imageView.setFitHeight(IMAGE_SIZE);
+                            imageView.setFitWidth(IMAGE_SIZE);
+                            setGraphic(imageView);
+                        } catch (Exception ignore) {
+                        }
                     }
                 };
             }

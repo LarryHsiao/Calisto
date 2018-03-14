@@ -44,6 +44,7 @@ public class TagCreation implements Initializable {
         }
         Tag createdTag = calistoTags.addTag(inputName, imageChooseController.imageUri());
         tagName.setText("");
+        imageChooseController.cleanField();
 
         if (listener != null) {
             listener.onTagCreated(createdTag);
