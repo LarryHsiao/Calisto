@@ -11,14 +11,14 @@ public class StorageImplTest {
     private final Configuration configuration = new MockConfiguration();
 
     @Test
-    public void saveFile_checkOriginalFileNotExist() throws Exception {
+    public void saveFile_checkOriginalFileExist() throws Exception {
         StorageFactory factory = new StorageFactory(configuration);
         Storage storage = factory.storage();
         final File file = new File(configuration.workspaceFile(), "tempTarget");
         file.mkdirs();
         file.createNewFile();
         storage.save(file);
-        Assert.assertFalse(file.exists());
+        Assert.assertTrue(file.exists());
     }
 
     @Test
