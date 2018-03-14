@@ -18,14 +18,14 @@ public class CalistoFactory {
     public CalistoFiles objects() {
         return new CalistoFilesImpl(
                 new StorageFactory(configuration).storage(),
-                new TaggingFactory(new DatabaseFactory().database()).objects(),
+                new TaggingFactory(new DatabaseFactory(configuration).database()).objects(),
                 new ExecutableFactory()
         );
     }
 
     public Tags tags() {
         return new CalistoTagsImpl(
-                new TaggingFactory(new DatabaseFactory().database()).tags()
+                new TaggingFactory(new DatabaseFactory(configuration).database()).tags()
         );
     }
 }

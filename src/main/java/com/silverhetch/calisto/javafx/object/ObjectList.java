@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static javafx.scene.input.TransferMode.COPY;
 import static javafx.scene.input.TransferMode.MOVE;
 
 public class ObjectList implements Initializable {
@@ -125,7 +126,7 @@ public class ObjectList implements Initializable {
     public void onDragOver(DragEvent dragEvent) {
         dragIndicator.setVisible(true);
         if (dragEvent.getDragboard().hasFiles()) {
-            dragEvent.acceptTransferModes(MOVE);
+            dragEvent.acceptTransferModes(COPY);
         }
         dragEvent.consume();
     }
