@@ -26,9 +26,10 @@ class StorageImpl implements Storage {
             for (File file : target.listFiles()) {
                 move(file, new File(dest, file.getName()));
             }
+            target.delete();
         } else {
             dest.getParentFile().mkdirs();
-            Files.copy(target.toPath(), dest.toPath());
+            Files.move(target.toPath(), dest.toPath());
         }
     }
 

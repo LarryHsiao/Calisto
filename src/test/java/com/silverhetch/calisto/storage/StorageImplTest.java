@@ -18,7 +18,7 @@ public class StorageImplTest {
         file.mkdirs();
         file.createNewFile();
         storage.save(file);
-        Assert.assertTrue(file.exists());
+        Assert.assertFalse(file.exists());
     }
 
     @Test
