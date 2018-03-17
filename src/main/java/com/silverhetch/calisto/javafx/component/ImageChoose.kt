@@ -15,12 +15,12 @@ class ImageChoose : Initializable {
     private var imageUriField: TextField? = null
     private val config = ConfigurationFactory().config()
     private var resources: ResourceBundle? = null
-    private var selectUri: String = ""
+    private var selectedUri: String = ""
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         this.resources = resources
         imageUriField!!.textProperty().addListener(
-                { observable, oldValue, newValue -> selectUri = newValue }
+                { observable, oldValue, newValue -> selectedUri = newValue }
         )
     }
 
@@ -31,10 +31,10 @@ class ImageChoose : Initializable {
         chooser.extensionFilters.addAll(FileChooser.ExtensionFilter("images", "*.png", "*.jpg", "*.jpeg"))
         val imageFile = chooser.showOpenDialog((e.source as Node).scene.window)
         imageUriField!!.text = imageFile!!.absolutePath
-        selectUri = imageFile.toURI().toString()
+        selectedUri = imageFile.toURI().toString()
     }
 
-    fun imageUri() = selectUri
+    fun imageUri() = selectedUri
 
     fun cleanField() {
         imageUriField!!.text = ""
