@@ -7,7 +7,6 @@ import javafx.scene.Node
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
 import javafx.stage.FileChooser
-import java.io.File
 import java.net.URL
 import java.util.*
 
@@ -16,10 +15,13 @@ class ImageChoose : Initializable {
     private var imageUriField: TextField? = null
     private val config = ConfigurationFactory().config()
     private var resources: ResourceBundle? = null
-    private var imageFile: File? = null
+    private var selectUri: String = ""
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         this.resources = resources
+        imageUriField!!.textProperty().addListener(
+                { observable, oldValue, newValue -> selectUri = newValue }
+        )
     }
 
     fun chooseImage(e: MouseEvent) {
@@ -27,11 +29,12 @@ class ImageChoose : Initializable {
         chooser.title = resources!!.getString("imageChoose.title")
         chooser.initialDirectory = config.workspaceFile()
         chooser.extensionFilters.addAll(FileChooser.ExtensionFilter("images", "*.png", "*.jpg", "*.jpeg"))
-        imageFile = chooser.showOpenDialog((e.source as Node).scene.window)
+        val imageFile = chooser.showOpenDialog((e.source as Node).scene.window)
         imageUriField!!.text = imageFile!!.absolutePath
+        selectUri = imageFile.toURI().toString()
     }
 
-    fun imageUri() = imageFile!!.toURI().toString()
+    fun imageUri() = selectUri
 
     fun cleanField() {
         imageUriField!!.text = ""

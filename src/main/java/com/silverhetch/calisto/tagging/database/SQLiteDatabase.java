@@ -30,7 +30,8 @@ class SQLiteDatabase implements Database {
                     "CREATE TABLE IF NOT EXISTS tag ( " +
                             " id        INTEGER PRIMARY KEY AUTOINCREMENT," +
                             " name      TEXT NOT NULL," +
-                            " uri_image TEXT NOT NULL " +
+                            " uri_image TEXT NOT NULL, " +
+                            " UNIQUE (name) "+
                             ");");
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS object_tag (" +

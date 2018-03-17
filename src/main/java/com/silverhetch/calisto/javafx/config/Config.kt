@@ -28,7 +28,7 @@ class Config : Initializable {
 
     fun showHomeChooser(event: ActionEvent) {
         val chooser = DirectoryChooser()
-        chooser.title = resources!!.getString("setting.homeChoose")
+        chooser.title = resources!!.getString("config.homeChoose")
         chooser.initialDirectory = config.workspaceFile()
         val newHome = chooser.showDialog((event.source as Node).scene.window) ?: return
         config.changeHome(newHome.absolutePath)

@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS tag
 (
   id        INTEGER PRIMARY KEY AUTOINCREMENT,
   name      TEXT NOT NULL,
-  uri_image TEXT NOT NULL
+  uri_image TEXT NOT NULL,
+  UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS object (
@@ -21,12 +22,14 @@ CREATE TABLE IF NOT EXISTS object_tag (
 
 INSERT INTO tag (name, uri_image) VALUES ('tag1', 'image');
 INSERT INTO tag (name, uri_image) VALUES ('tag2', 'image2');
+INSERT or IGNORE INTO tag (name, uri_image) VALUES ('tag3', 'image4');
 INSERT INTO object (name, uri) VALUES ('object1', 'uri1');
 INSERT INTO object (name, uri) VALUES ('object2', 'uri2');
 INSERT INTO object_tag (object_id, tag_id) VALUES (1, 2);
 INSERT INTO object_tag (object_id, tag_id) VALUES (1, 1);
 INSERT INTO object_tag (object_id, tag_id) VALUES (2, 1);
 
+-- Use case: show all objects with tags
 SELECT
   object.name,
   tag.name,
@@ -51,6 +54,10 @@ WHERE object_tag.tag_id = 1 AND object.id = object_tag.object_id;
 -- Use case : all objects
 SELECT *
 FROM object;
+
+-- Use case : all tags
+SELECT *
+FROM tag;
 
 -- Use case : create object
 INSERT INTO object (name, uri) VALUES ('inserted object', 'uri of object');
