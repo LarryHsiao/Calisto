@@ -11,5 +11,7 @@ public interface CalistoFile {
 
     AttachedTags attachedTags();
 
+    void delete();
+
     void execute() throws IOException;
 }

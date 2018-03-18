@@ -7,21 +7,27 @@ import com.silverhetch.calisto.javafx.utility.ExceptionDialog;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static javafx.event.ActionEvent.ACTION;
+import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
 import static javafx.scene.input.TransferMode.COPY;
 
 public class ObjectList implements Initializable {
@@ -43,7 +49,6 @@ public class ObjectList implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resource = resources;
-        rootData.addAll(calistoFiles.all());
         rootList.setItems(rootData);
         rootList.getSelectionModel()
                 .selectedItemProperty().addListener((observable, oldValue, newValue) -> onItemSelected(newValue));
@@ -58,6 +63,22 @@ public class ObjectList implements Initializable {
                     }
                 };
             }
+        });
+        rootList.setOnKeyPressed(event -> {
+            if (!rootList.isFocused()) {
+                return;
+            }
+            if (event.getCode() != KeyCode.DELETE) {
+                return;
+            }
+            Alert alert = new Alert(CONFIRMATION);
+            alert.setTitle(resources.getString("app.confirm"));
+            alert.setContentText(MessageFormat.format(resources.getString("app.confirmDelete"), rootList.getSelectionModel().getSelectedItem().name()));
+            alert.getDialogPane().lookupButton(ButtonType.OK).addEventFilter(ACTION, (EventHandler<Event>) event1 -> {
+                rootList.getSelectionModel().getSelectedItem().delete();
+                loadData();
+            });
+            alert.showAndWait();
         });
         objectTree.setShowRoot(false);
         objectTree.setRoot(new TreeItem<>());
@@ -88,6 +109,13 @@ public class ObjectList implements Initializable {
                 showContextMenu(clickedItem, event.getScreenX(), event.getScreenY());
             }
         });
+
+        loadData();
+    }
+
+    private void loadData(){
+        rootData.clear();
+        rootData.addAll(calistoFiles.all());
     }
 
     private void showContextMenu(TreeItem<CalistoFile> clickedItem, double screenX, double screenY) {

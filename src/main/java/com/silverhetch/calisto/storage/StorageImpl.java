@@ -4,6 +4,7 @@ import com.silverhetch.calisto.config.Configuration;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.UUID;
 
@@ -34,10 +35,19 @@ class StorageImpl implements Storage {
     }
 
     @Override
-    public StorageFile get(String id) {
+    public StorageFile fileById(String id) {
         final File file = new File(root, id);
         if (!file.exists()) {
             throw new RuntimeException("File not found");
+        }
+        return new StorageFileImpl(file);
+    }
+
+    @Override
+    public StorageFile fileByUri(String uri) {
+        final File file = new File(URI.create(uri));
+        if (!file.getParentFile().equals(root)) {
+            throw new RuntimeException("Invalid uri.");
         }
         return new StorageFileImpl(file);
     }

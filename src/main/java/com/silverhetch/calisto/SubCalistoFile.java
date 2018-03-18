@@ -30,6 +30,11 @@ class SubCalistoFile implements CalistoFile {
     }
 
     @Override
+    public void delete() {
+        parentObject.delete();
+    }
+
+    @Override
     public void execute() throws IOException {
         factory.directory().execute(rootFile.toURI());
     }

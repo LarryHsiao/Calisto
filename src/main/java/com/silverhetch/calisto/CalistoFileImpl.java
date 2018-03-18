@@ -1,6 +1,7 @@
 package com.silverhetch.calisto;
 
 import com.silverhetch.calisto.javafx.utility.file.ExecutableFactory;
+import com.silverhetch.calisto.storage.Storage;
 import com.silverhetch.calisto.tagging.AttachedTags;
 import com.silverhetch.calisto.tagging.Object;
 
@@ -10,10 +11,12 @@ import java.net.URI;
 
 class CalistoFileImpl implements CalistoFile {
     private final Object object;
+    private final Storage storage;
     private final ExecutableFactory executableFactory;
 
-    CalistoFileImpl(Object object, ExecutableFactory executableFactory) {
+    CalistoFileImpl(Storage storage, Object object, ExecutableFactory executableFactory) {
         this.object = object;
+        this.storage = storage;
         this.executableFactory = executableFactory;
     }
 
@@ -36,6 +39,12 @@ class CalistoFileImpl implements CalistoFile {
     @Override
     public void execute() throws IOException {
         executableFactory.file().execute(URI.create(object.objectUri()));
+    }
+
+    @Override
+    public void delete() {
+        object.delete();
+        storage.fileByUri(object.objectUri()).delete();
     }
 
     @Override

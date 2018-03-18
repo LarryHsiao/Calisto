@@ -26,7 +26,7 @@ class CalistoFilesImpl implements CalistoFiles {
         for (String tag : tags) {
             object.tags().addTag(tag, "");
         }
-        return new CalistoFileImpl(object, factory);
+        return new CalistoFileImpl(storage,object, factory);
     }
 
     @Override
@@ -34,7 +34,7 @@ class CalistoFilesImpl implements CalistoFiles {
         Object[] result = objects.byTagName(tagName);
         CalistoFile[] calistoFile = new CalistoFile[result.length];
         for (int i = 0; i < calistoFile.length; i++) {
-            calistoFile[i] = new CalistoFileImpl(result[i], factory);
+            calistoFile[i] = new CalistoFileImpl(storage,result[i], factory);
         }
         return calistoFile;
     }
@@ -44,7 +44,7 @@ class CalistoFilesImpl implements CalistoFiles {
         Object[] objectArray = objects.all();
         CalistoFile[] calistoFiles = new CalistoFile[objectArray.length];
         for (int i = 0; i < objectArray.length; i++) {
-            calistoFiles[i] = new CalistoFileImpl(objectArray[i], factory);
+            calistoFiles[i] = new CalistoFileImpl(storage,objectArray[i], factory);
         }
         return calistoFiles;
     }

@@ -51,8 +51,20 @@ public class StorageImplTest {
         file.mkdirs();
         file.createNewFile();
         StorageFile fileSaved = storage.save(file);
-        StorageFile fileFromGet = storage.get(fileSaved.id());
-        Assert.assertTrue(new File(fileSaved.uri()).exists());
+        StorageFile fileFromGet = storage.fileById(fileSaved.id());
+        Assert.assertTrue(new File(fileFromGet.uri()).exists());
+    }
+
+    @Test
+    public void get_checkExistWithUri() throws Exception {
+        StorageFactory factory = new StorageFactory(configuration);
+        Storage storage = factory.storage();
+        final File file = new File(configuration.workspaceFile(), "tempTarget");
+        file.mkdirs();
+        file.createNewFile();
+        StorageFile fileSaved = storage.save(file);
+        StorageFile fileFromGet = storage.fileByUri(fileSaved.uri().toString());
+        Assert.assertTrue(new File(fileFromGet.uri()).exists());
     }
 
     @Test
