@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static javafx.scene.input.TransferMode.COPY;
-import static javafx.scene.input.TransferMode.MOVE;
 
 public class ObjectList implements Initializable {
     @FXML private ListView<CalistoFile> rootList;
@@ -81,7 +80,7 @@ public class ObjectList implements Initializable {
                     clickedItem.getValue().execute();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    new ExceptionDialog().showDialog(e);
+                    new ExceptionDialog(e).show();
                 }
             }
 
@@ -99,7 +98,7 @@ public class ObjectList implements Initializable {
                 new AttachTagDialog(resource).show(clickedItem.getValue());
             } catch (IOException e) {
                 e.printStackTrace();
-                new ExceptionDialog().showDialog(e);
+                new ExceptionDialog(e).show();
             }
         });
         contextMenu.getItems().add(item);
@@ -148,7 +147,7 @@ public class ObjectList implements Initializable {
             dragEvent.setDropCompleted(success);
             dragEvent.consume();
         } catch (Exception e) {
-            new ExceptionDialog().showDialog(e);
+            new ExceptionDialog(e).show();
         }
     }
 

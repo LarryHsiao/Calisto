@@ -2,6 +2,7 @@ package com.silverhetch.calisto.javafx.tag;
 
 import com.silverhetch.calisto.CalistoFactory;
 import com.silverhetch.calisto.javafx.component.ImageChoose;
+import com.silverhetch.calisto.javafx.utility.ExceptionDialog;
 import com.silverhetch.calisto.tagging.Tag;
 import com.silverhetch.calisto.tagging.Tags;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ public class TagCreation implements Initializable {
     public interface TagCreateListener {
         void onTagCreated(Tag tag);
     }
+
     @FXML private ImageChoose imageChooseController;
     @FXML private TextField tagName;
     @FXML private Button confirm;
@@ -38,16 +40,20 @@ public class TagCreation implements Initializable {
     }
 
     public void onConfirmClick(MouseEvent mouseEvent) {
-        String inputName = tagName.getText();
-        if (inputName == null || inputName.isEmpty()) {
-            return;
-        }
-        Tag createdTag = calistoTags.addTag(inputName, imageChooseController.imageUri());
-        tagName.setText("");
-        imageChooseController.cleanField();
+        try {
+            String inputName = tagName.getText();
+            if (inputName == null || inputName.isEmpty()) {
+                return;
+            }
+            Tag createdTag = calistoTags.addTag(inputName, imageChooseController.imageUri());
+            tagName.setText("");
+            imageChooseController.cleanField();
 
-        if (listener != null) {
-            listener.onTagCreated(createdTag);
+            if (listener != null) {
+                listener.onTagCreated(createdTag);
+            }
+        } catch (Exception e) {
+            new ExceptionDialog(e).show();
         }
     }
 }

@@ -13,7 +13,13 @@ import java.util.ResourceBundle;
 import static javafx.scene.control.Alert.AlertType.ERROR;
 
 public class ExceptionDialog {
-    public void showDialog(Exception e) {
+    private final Exception e;
+
+    public ExceptionDialog(Exception e) {
+        this.e = e;
+    }
+
+    public void show() {
         ResourceBundle bundle = ResourceBundle.getBundle("i18n/bundle");
         Alert alert = new Alert(ERROR);
         alert.setTitle(bundle.getString("dialogException.title"));

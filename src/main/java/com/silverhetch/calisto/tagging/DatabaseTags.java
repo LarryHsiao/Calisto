@@ -37,7 +37,7 @@ class DatabaseTags implements Tags {
     @Override
     public Tag addTag(String name, String uri) {
         try (Connection connection = database.connection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO tag (name, uri_image) VALUES (?, ?);");
+             PreparedStatement statement = connection.prepareStatement("INSERT OR IGNORE INTO tag (name, uri_image) VALUES (?, ?);");
         ) {
             statement.setString(1, name);
             statement.setString(2, uri);
