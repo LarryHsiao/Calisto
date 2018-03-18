@@ -114,7 +114,6 @@ public class ObjectList implements Initializable {
     }
 
     private void loadData(){
-        rootData.clear();
         rootData.addAll(calistoFiles.all());
     }
 

@@ -8,14 +8,20 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+
+import static javafx.event.ActionEvent.ACTION;
+import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
+import static javafx.scene.control.ButtonType.OK;
 
 public class TagList implements Initializable {
     private final static int IMAGE_SIZE = 25;
@@ -50,6 +56,19 @@ public class TagList implements Initializable {
                     }
                 };
             }
+        });
+        tagList.setOnKeyPressed(event -> {
+            if (!tagList.isFocused()) {
+                return;
+            }
+            Alert alert = new Alert(CONFIRMATION);
+            alert.setTitle(resources.getString("app.confirm"));
+            alert.setContentText(MessageFormat.format(resources.getString("app.confirmDelete"), tagList.getSelectionModel().getSelectedItem().name()));
+            alert.getDialogPane().lookupButton(OK).addEventFilter(ACTION, confirmEvent -> {
+                tagList.getSelectionModel().getSelectedItem().delete();
+                loadList();
+            });
+            alert.showAndWait();
         });
         loadList();
     }
