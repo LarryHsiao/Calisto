@@ -37,7 +37,8 @@ class SQLiteDatabase implements Database {
                     "CREATE TABLE IF NOT EXISTS object_tag (" +
                             " id INTEGER PRIMARY KEY AUTOINCREMENT , " +
                             " object_id INTEGER, " +
-                            " tag_id INTEGER " +
+                            " tag_id INTEGER, " +
+                            " UNIQUE (object_id, tag_id)"+
                             ");");
         } catch (Exception e) {
             throw new RuntimeException(e);

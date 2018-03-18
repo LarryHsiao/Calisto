@@ -42,7 +42,7 @@ class DatabaseAttachedTags implements AttachedTags {
     public AttachedTag addTag(String name, String imageUri) {
         try (Connection connection = database.connection();
              PreparedStatement insertTagStatement = connection.prepareStatement("INSERT INTO tag (name, uri_image) VALUES (?, ?);");
-             PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT INTO object_tag (object_id, tag_id) VALUES (?, ?);");
+             PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT OR IGNORE INTO object_tag (object_id, tag_id) VALUES (?, ?);");
         ) {
             connection.setAutoCommit(false);
             insertTagStatement.setString(1, name);
@@ -70,7 +70,7 @@ class DatabaseAttachedTags implements AttachedTags {
     @Override
     public AttachedTag addTag(Tag tag) {
         try (Connection connection = database.connection();
-             PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT INTO object_tag (object_id, tag_id) VALUES (?, ?);");
+             PreparedStatement linkToTagStatement = connection.prepareStatement("INSERT OR IGNORE INTO object_tag (object_id, tag_id) VALUES (?, ?);");
         ) {
             connection.setAutoCommit(false);
             linkToTagStatement.setLong(1, objectId);
