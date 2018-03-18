@@ -25,7 +25,7 @@ class StorageFileImpl implements StorageFile {
         delete(root);
     }
 
-    public static void delete(File file) {
+    private void delete(File file) {
         if (file.isDirectory()) {
             String files[] = file.list();
             for (String temp : files) {
