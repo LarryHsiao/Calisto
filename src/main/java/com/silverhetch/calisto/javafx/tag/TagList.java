@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -59,6 +60,9 @@ public class TagList implements Initializable {
         });
         tagList.setOnKeyPressed(event -> {
             if (!tagList.isFocused()) {
+                return;
+            }
+            if (event.getCode() != KeyCode.DELETE){
                 return;
             }
             Alert alert = new Alert(CONFIRMATION);
