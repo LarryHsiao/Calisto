@@ -12,7 +12,12 @@ internal class JsonConfiguration(private val jsonFile:Json,private val default: 
 
     override fun workspaceFile(): File {
         return try {
-            File(jsonFile.json()["workspaceFile"].asString)
+            val homeFile = File(jsonFile.json()["workspaceFile"].asString)
+            if (homeFile.exists()){
+                homeFile
+            }else{
+                default.workspaceFile()
+            }
         }catch (e: Exception){
             default.workspaceFile()
         }
