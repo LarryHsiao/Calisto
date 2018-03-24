@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.silverhetch.calisto.javafx.component.ImageChoose">
 
-    <Text text="%tagCreation.imagePathLabel"/>
-    <TextField fx:id="imageUriField"/>
-    <Button text="..." onMouseClicked="#chooseImage"/>
+<?import com.jfoenix.controls.JFXTextField?>
+<HBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.silverhetch.calisto.javafx.component.ImageChoose">
+
+    <Text text="%tagCreation.imagePathLabel" />
+    <JFXTextField fx:id="imageUriField" />
+    <JFXButton onMouseClicked="#chooseImage" text="..." />
 </HBox>

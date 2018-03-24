@@ -4,13 +4,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/General.css"
       fx:controller="com.silverhetch.calisto.javafx.config.Config">
 
     <HBox>
-        <TextField fx:id="homePathField" editable="false"/>
-        <Button text="..." onAction="#showHomeChooser"/>
+        <JFXTextField fx:id="homePathField" editable="false"/>
+        <JFXButton text="..." onAction="#showHomeChooser"/>
     </HBox>
 </VBox>
