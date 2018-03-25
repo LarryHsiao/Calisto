@@ -169,6 +169,7 @@ public class ObjectList implements Initializable {
             if (dragboard.hasFiles()) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/fxml/ObjectCreation.fxml"));
+                loader.setResources(resource);
                 Region dialogRoot = loader.load();
                 ((ObjectCreation) loader.getController()).setup(dragboard.getFiles().toArray(new File[dragboard.getFiles().size()]));
 

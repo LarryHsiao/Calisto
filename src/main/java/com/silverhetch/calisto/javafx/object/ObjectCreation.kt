@@ -18,8 +18,10 @@ class ObjectCreation : Initializable {
     @FXML
     private var fileList: ListView<File>? = null
     private val data = ObservableListWrapper<File>(ArrayList<File>())
+    private var resourceBundle: ResourceBundle? = null;
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        resourceBundle = resources
         fileList!!.items = data
         fileList!!.cellFactory = Callback<ListView<File>, ListCell<File>> {
             object : ListCell<File>() {
@@ -28,7 +30,7 @@ class ObjectCreation : Initializable {
                     text = if (empty) {
                         ""
                     } else {
-                        item!!.name
+                        FileNameIndicate(item!!, resourceBundle!!).value()
                     }
                 }
             }

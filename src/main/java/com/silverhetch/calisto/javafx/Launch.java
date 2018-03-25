@@ -7,8 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ResourceBundle;
-
 public class Launch extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -19,7 +17,7 @@ public class Launch extends Application {
         Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
         StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("/css/General.css").toURI().toString());
 
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), ResourceBundle.getBundle("i18n/bundle"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"), new ResourceBundleFactory().instance());
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.show();
