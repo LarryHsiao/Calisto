@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import com.jfoenix.controls.JFXChipView?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.silverhetch.calisto.javafx.tag.selection.TagSelection">
+    <JFXChipView fx:id="clipView"/>
+</GridPane>

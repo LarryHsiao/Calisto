@@ -1,5 +1,6 @@
 package com.silverhetch.calisto.javafx.object;
 
+import com.jfoenix.controls.JFXDialog;
 import com.silverhetch.calisto.CalistoFactory;
 import com.silverhetch.calisto.CalistoFile;
 import com.silverhetch.calisto.CalistoFiles;
@@ -10,12 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -23,7 +27,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static javafx.event.ActionEvent.ACTION;
@@ -31,6 +34,7 @@ import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
 import static javafx.scene.input.TransferMode.COPY;
 
 public class ObjectList implements Initializable {
+    @FXML private StackPane root;
     @FXML private ListView<CalistoFile> rootList;
     @FXML private TextField tagFilterField;
     @FXML private Label dragIndicator;
@@ -163,12 +167,14 @@ public class ObjectList implements Initializable {
             Dragboard dragboard = dragEvent.getDragboard();
             boolean success = false;
             if (dragboard.hasFiles()) {
-                List<CalistoFile> newCalistoFile = new ArrayList<>();
-                for (File newFile : dragboard.getFiles()) {
-                    CalistoFile calistoFile = calistoFiles.put(newFile);
-                    newCalistoFile.add(calistoFile);
-                }
-                rootData.addAll(newCalistoFile);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/fxml/ObjectCreation.fxml"));
+                Region dialogRoot = loader.load();
+                ((ObjectCreation) loader.getController()).setup(dragboard.getFiles().toArray(new File[dragboard.getFiles().size()]));
+
+                JFXDialog dialog = new JFXDialog();
+                dialog.setContent(dialogRoot);
+                dialog.show(root);
                 success = true;
             }
             dragEvent.setDropCompleted(success);
