@@ -1,5 +1,7 @@
 package com.silverhetch.calisto.javafx.`object`
 
+import com.silverhetch.calisto.CalistoFactory
+import com.silverhetch.calisto.CalistoFiles
 import com.silverhetch.calisto.javafx.tag.selection.TagSelection
 import com.sun.javafx.collections.ObservableListWrapper
 import javafx.fxml.FXML
@@ -13,10 +15,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ObjectCreation : Initializable {
+    interface Callback {
+        fun onConfirm()
+    }
+
     @FXML
     private var tagSelectionController: TagSelection? = null
     @FXML
     private var fileList: ListView<File>? = null
+    private var callback: Callback? = null
+    private val calistoFiles: CalistoFiles = CalistoFactory().objects()
     private val data = ObservableListWrapper<File>(ArrayList<File>())
     private var resourceBundle: ResourceBundle? = null;
 
@@ -37,7 +45,13 @@ class ObjectCreation : Initializable {
         }
     }
 
-    fun setup(files: Array<File>) {
+    fun setup(files: Array<File>, callback: Callback) {
+        this.callback = callback;
         data.setAll(*files)
+    }
+
+    fun onConfirm() {
+        data.forEach { file -> calistoFiles.put(file) }
+        callback!!.onConfirm()
     }
 }

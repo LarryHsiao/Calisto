@@ -117,8 +117,8 @@ public class ObjectList implements Initializable {
         loadData();
     }
 
-    private void loadData(){
-        rootData.addAll(calistoFiles.all());
+    private void loadData() {
+        rootData.setAll(calistoFiles.all());
     }
 
     private void showContextMenu(TreeItem<CalistoFile> clickedItem, double screenX, double screenY) {
@@ -167,13 +167,20 @@ public class ObjectList implements Initializable {
             Dragboard dragboard = dragEvent.getDragboard();
             boolean success = false;
             if (dragboard.hasFiles()) {
-                FXMLLoader loader = new FXMLLoader();
+                final JFXDialog dialog = new JFXDialog();
+
+                final FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/fxml/ObjectCreation.fxml"));
                 loader.setResources(resource);
-                Region dialogRoot = loader.load();
-                ((ObjectCreation) loader.getController()).setup(dragboard.getFiles().toArray(new File[dragboard.getFiles().size()]));
+                final Region dialogRoot = loader.load();
+                ((ObjectCreation) loader.getController()).setup(
+                        dragboard.getFiles().toArray(new File[dragboard.getFiles().size()]),
+                        () -> {
+                            dialog.close();
+                            loadData();
+                        }
+                );
 
-                JFXDialog dialog = new JFXDialog();
                 dialog.setContent(dialogRoot);
                 dialog.show(root);
                 success = true;
