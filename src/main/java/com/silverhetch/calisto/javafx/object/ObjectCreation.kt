@@ -1,5 +1,6 @@
 package com.silverhetch.calisto.javafx.`object`
 
+import com.jfoenix.controls.events.JFXAutoCompleteEvent
 import com.silverhetch.calisto.CalistoFactory
 import com.silverhetch.calisto.CalistoFiles
 import com.silverhetch.calisto.javafx.tag.selection.TagSelection
@@ -29,6 +30,7 @@ class ObjectCreation : Initializable {
     private var resourceBundle: ResourceBundle? = null;
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        JFXAutoCompleteEvent.SELECTION // don`t know why, just for not crash
         resourceBundle = resources
         fileList!!.items = data
         fileList!!.cellFactory = Callback<ListView<File>, ListCell<File>> {
@@ -43,6 +45,7 @@ class ObjectCreation : Initializable {
                 }
             }
         }
+
     }
 
     fun setup(files: Array<File>, callback: Callback) {
@@ -51,7 +54,7 @@ class ObjectCreation : Initializable {
     }
 
     fun onConfirm() {
-        data.forEach { file -> calistoFiles.put(file) }
+        data.forEach { file -> calistoFiles.put(file,*tagSelectionController!!.tags()) }
         callback!!.onConfirm()
     }
 }

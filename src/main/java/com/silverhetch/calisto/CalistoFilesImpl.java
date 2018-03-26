@@ -5,6 +5,7 @@ import com.silverhetch.calisto.storage.Storage;
 import com.silverhetch.calisto.storage.StorageFile;
 import com.silverhetch.calisto.tagging.Object;
 import com.silverhetch.calisto.tagging.Objects;
+import com.silverhetch.calisto.tagging.Tag;
 
 import java.io.File;
 
@@ -26,7 +27,17 @@ class CalistoFilesImpl implements CalistoFiles {
         for (String tag : tags) {
             object.tags().addTag(tag, "");
         }
-        return new CalistoFileImpl(storage,object, factory);
+        return new CalistoFileImpl(storage, object, factory);
+    }
+
+    @Override
+    public CalistoFile put(File file, Tag... tags) throws Exception {
+        final StorageFile storageFile = storage.save(file);
+        Object object = objects.add(file.getName(), storageFile.uri().toString());
+        for (Tag tag : tags) {
+            object.tags().addTag(tag);
+        }
+        return new CalistoFileImpl(storage, object, factory);
     }
 
     @Override
@@ -34,7 +45,7 @@ class CalistoFilesImpl implements CalistoFiles {
         Object[] result = objects.byTagName(tagName);
         CalistoFile[] calistoFile = new CalistoFile[result.length];
         for (int i = 0; i < calistoFile.length; i++) {
-            calistoFile[i] = new CalistoFileImpl(storage,result[i], factory);
+            calistoFile[i] = new CalistoFileImpl(storage, result[i], factory);
         }
         return calistoFile;
     }
@@ -44,7 +55,7 @@ class CalistoFilesImpl implements CalistoFiles {
         Object[] objectArray = objects.all();
         CalistoFile[] calistoFiles = new CalistoFile[objectArray.length];
         for (int i = 0; i < objectArray.length; i++) {
-            calistoFiles[i] = new CalistoFileImpl(storage,objectArray[i], factory);
+            calistoFiles[i] = new CalistoFileImpl(storage, objectArray[i], factory);
         }
         return calistoFiles;
     }
